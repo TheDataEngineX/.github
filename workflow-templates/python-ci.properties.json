@@ -1,0 +1,6 @@
+{
+  "name": "Python CI",
+  "description": "Lint, typecheck, and test a Python package using uv + ruff + mypy + pytest",
+  "iconName": "python",
+  "categories": ["Python", "CI"]
+}

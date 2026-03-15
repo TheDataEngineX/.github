@@ -1,0 +1,23 @@
+title: "[Q&A] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Question
+        Ask anything about using the DataEngineX ecosystem.
+        Before posting, search existing discussions and check the [docs](https://docs.thedataenginex.org).
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you want to know?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What have you tried? Include versions, error messages, or relevant config.
+    validations:
+      required: false

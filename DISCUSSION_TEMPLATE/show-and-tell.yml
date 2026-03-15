@@ -1,0 +1,29 @@
+title: "[Show & Tell] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Show & Tell
+        Share what you've built with the DataEngineX ecosystem — pipelines, agents, dashboards, integrations.
+  - type: textarea
+    id: what
+    attributes:
+      label: What did you build?
+      description: Describe your project or use case.
+    validations:
+      required: true
+  - type: textarea
+    id: stack
+    attributes:
+      label: Stack / components used
+      description: Which DEX components did you use? Any interesting integrations?
+    validations:
+      required: false
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Repo, demo, blog post, or screenshots (optional).
+    validations:
+      required: false

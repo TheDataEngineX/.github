@@ -1,0 +1,57 @@
+name: Python CI
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: "Python version to use"
+        required: false
+        type: string
+        default: "3.12"
+      package-path:
+        description: "Path to source package"
+        required: false
+        type: string
+        default: "src/"
+      coverage-threshold:
+        description: "Minimum coverage percentage"
+        required: false
+        type: number
+        default: 80
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      - run: uv sync --group dev
+      - run: uv run ruff check ${{ inputs.package-path }} tests/
+      - run: uv run ruff format --check ${{ inputs.package-path }} tests/
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      - run: uv sync --group dev
+      - run: uv run mypy ${{ inputs.package-path }} --config-file=pyproject.toml
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      - run: uv sync --group dev
+      - run: uv run pytest tests/ -v --cov --cov-report=xml --cov-fail-under=${{ inputs.coverage-threshold }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage.xml

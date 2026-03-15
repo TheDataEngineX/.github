@@ -1,0 +1,6 @@
+{
+  "name": "Security Scan",
+  "description": "Trivy vulnerability scan + CodeQL analysis + pip-audit dependency audit",
+  "iconName": "octicon shield",
+  "categories": ["Security"]
+}

@@ -1,0 +1,37 @@
+name: Sync Labels
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - labels.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync labels to ${{ matrix.repo }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - DEX
+          - datadex
+          - agentdex
+          - careerdex
+          - dex-studio
+          - infradex
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync labels
+        uses: crazy-max/ghaction-github-labeler@v5
+        with:
+          github-token: ${{ secrets.LABELS_SYNC_TOKEN }}
+          repository: TheDataEngineX/${{ matrix.repo }}
+          yaml-file: labels.yml
+          skip-delete: false
+          dry-run: false

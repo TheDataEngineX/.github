@@ -1,0 +1,66 @@
+# Priority
+- name: P1-high
+  color: "D73A4A"
+  description: "High priority"
+- name: P2-medium
+  color: "FBCA04"
+  description: "Medium priority"
+- name: P3-low
+  color: "0E8A16"
+  description: "Low priority"
+
+# Type
+- name: bug
+  color: "D73A4A"
+  description: "Something isn't working"
+- name: enhancement
+  color: "A2EEEF"
+  description: "New feature or improvement"
+- name: documentation
+  color: "0075CA"
+  description: "Documentation updates"
+- name: refactor
+  color: "D4C5F9"
+  description: "Code refactoring"
+
+# Component — framework layers
+- name: "component:api"
+  color: "C5DEF5"
+  description: "API layer"
+- name: "component:data"
+  color: "BFD4F2"
+  description: "Data pipelines"
+- name: "component:ml"
+  color: "D4C5F9"
+  description: "ML / AI"
+- name: "component:infrastructure"
+  color: "F9D0C4"
+  description: "Infrastructure"
+- name: "component:testing"
+  color: "BFDADC"
+  description: "Tests"
+
+# Component — repos
+- name: "component:studio"
+  color: "FEF2C0"
+  description: "dex-studio desktop UI"
+- name: "component:agents"
+  color: "C2E0C6"
+  description: "agentdex AI agent platform"
+- name: "component:pipelines"
+  color: "BFD4F2"
+  description: "datadex pipeline engine"
+- name: "component:career"
+  color: "E4C8F0"
+  description: "careerdex career intelligence"
+- name: "component:infra"
+  color: "F9D0C4"
+  description: "infradex IaC + monitoring"
+
+# Status
+- name: triage
+  color: "EDEDED"
+  description: "Needs triage"
+- name: blocked
+  color: "B60205"
+  description: "Blocked on something"

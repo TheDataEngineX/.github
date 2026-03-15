@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/orgs/TheDataEngineX/discussions
+    about: Ask questions, share ideas, and get help from the community
+  - name: 📖 Documentation
+    url: https://docs.thedataenginex.org
+    about: Check the docs before opening an issue

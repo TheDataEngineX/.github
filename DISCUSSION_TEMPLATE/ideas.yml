@@ -1,0 +1,45 @@
+title: "[Idea] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Feature Idea
+        Propose a feature or improvement before opening a formal issue.
+        Use this to gauge interest and refine the idea with the community.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What problem does this solve? What's the current pain point?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe what you have in mind. Rough sketches welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you've thought about.
+    validations:
+      required: false
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - dataenginex (core)
+        - datadex (pipelines)
+        - agentdex (agents)
+        - careerdex (career)
+        - dex-studio (UI)
+        - infradex (infra)
+        - docs / DX
+        - other
+    validations:
+      required: true

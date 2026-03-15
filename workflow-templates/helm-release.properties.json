@@ -1,0 +1,5 @@
+{
+  "name": "Helm Release",
+  "description": "Package and publish Helm charts to GHCR OCI registry",
+  "categories": ["Continuous Deployment"]
+}

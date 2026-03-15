@@ -1,0 +1,6 @@
+{
+  "name": "Docker Build & Push",
+  "description": "Build and push Docker image to GitHub Container Registry",
+  "iconName": "docker",
+  "categories": ["Docker", "CI/CD"]
+}
