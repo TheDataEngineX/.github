@@ -1,27 +1,75 @@
 ---
-applyTo: ".github/workflows/**/*.yml,.github/workflows/**/*.yaml"
+applyTo: ".github/workflows/**/*.yml"
 ---
 
-# GitHub Actions — Project Specifics
+# GitHub Actions Workflow Standards
 
-## Workflows
-- `ci.yml` — ruff + mypy + pytest on push/PR to main/dev
-- `cd.yml` — Docker build + push to ghcr.io (after CI success)
-- `release-dataenginex.yml` — DataEngineX package release (tag + GitHub release)
-- `pypi-publish.yml` — DataEngineX PyPI publishing (triggered by DataEngineX release)
-- `package-validation.yml` — Validate DataEngineX wheel build + twine
-- `security.yml` — Semgrep + CodeQL on push/PR to main/dev
-- `docs-pages.yml` — MkDocs build and publish to GitHub Pages
-- `label-sync.yml` — Sync repository labels from `.github/labels.yml`
-- `project-automation.yml` — Auto-add issues/PRs to organization project
+## Action versions — current pinned versions
 
-## Naming
-- Files: lowercase `.yml` | Workflows: title case | Jobs: kebab-case | Steps: sentence case
+| Action | Version |
+| --- | --- |
+| `actions/checkout` | `@v4` |
+| `actions/setup-python` | `@v5` |
+| `actions/upload-artifact` | `@v4` |
+| `actions/download-artifact` | `@v4` |
+| `astral-sh/setup-uv` | `@v5` |
+| `codecov/codecov-action` | `@v4` |
+| `github/codeql-action/*` | `@v3` |
 
-## Patterns
-- `actions/checkout@v6` | `actions/github-script@v8` for Slack via `SLACK_WEBHOOK`
-- `uv` for deps (not pip) | Python 3.12 | `ubuntu-latest`
-- Declare `permissions:` per workflow — pin action versions to tags
-- CD triggers on `workflow_run` after CI success
-- Branch-based deployment: `dev` → dex-dev, `main` → dex (no stage or preview environments)
-- Matrix releases: separate workflows for independent package versioning
+Never use `@latest`, `@main`, or non-existent versions (`@v6`, `@v7`, `@v8`).
+
+## Permissions
+
+Declare minimal permissions on every workflow:
+
+```yaml
+permissions:
+  contents: read
+```
+
+Add only what the job needs. Never `permissions: write-all`.
+
+## Job dependencies
+
+Standard CI order:
+
+```yaml
+typecheck:
+  needs: lint
+test:
+  needs: [lint, typecheck]
+```
+
+## Python setup (always use uv)
+
+```yaml
+- uses: astral-sh/setup-uv@v5
+  with:
+    version: "latest"
+- uses: actions/setup-python@v5
+  with:
+    python-version: "3.12"
+- run: uv sync
+```
+
+Never `pip install` in workflows.
+
+## Coverage upload
+
+```yaml
+- uses: codecov/codecov-action@v4
+  with:
+    flags: <repo-name>
+    fail_ci_if_error: false
+  env:
+    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+```
+
+## Checklist
+
+- [ ] All action versions pinned to major tag (not `@latest`)
+- [ ] `permissions:` block with minimal scope
+- [ ] Jobs have correct `needs:` chain
+- [ ] No hardcoded secrets — uses `${{ secrets.NAME }}`
+- [ ] Python installed with `uv sync`
+- [ ] Coverage uploaded with `fail_ci_if_error: false`
