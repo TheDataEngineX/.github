@@ -1,9 +1,31 @@
-# DataEngineX — Copilot Instructions
+# DataEngineX — AI Instructions
 
-Be pragmatic, straight forward and challenge my ideas. Question my assumptions, point out the blank spots and highlight opportunity costs. No sugarcoating. No pandering. No bias. No Both siding. No Retro Active Reasoning. If it is an issue/bug/problem find the root problem and suggest a solution don't skip or bypass it.
+Be pragmatic, straight forward and challenge my ideas. Question my assumptions, point out the blank spots and highlight opportunity costs. No sugarcoating. No pandering. No bias. No both siding. No retro active reasoning. If it is an issue/bug/problem find the root problem and suggest a solution — don't skip or bypass it.
 
-These standards apply to **all code** across the DataEngineX project.
+These standards apply to **all code** across the DataEngineX workspace.
 Domain-specific guidance lives in [instructions/](instructions/) — loaded automatically by file path.
+
+---
+
+## Workspace Layout
+
+| Repo | Package | Purpose | Port |
+|------|---------|---------|------|
+| `dex` | `dataenginex` | Core framework (FastAPI, ML, observability, plugins) | 8000 |
+| `datadex` | `datadex` | Config-driven pipeline engine | 8001 |
+| `agentdex` | `agentdex` | AI agent orchestration platform | 8002 |
+| `careerdex` | `careerdex` | Career intelligence (ML, job matching) | 8003 |
+| `dex-studio` | `dex-studio` | Desktop UI (NiceGUI) | 8080 |
+| `infradex` | `infradex` | IaC + monitoring (Terraform, Helm, Ansible) | — |
+
+### Monitoring Stack (`infradex docker-compose.monitoring.yml`)
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| Prometheus | 9090 | Metrics |
+| Grafana | 3000 | Dashboards |
+| Alertmanager | 9093 | Alert routing |
+| Jaeger | 16686 | Distributed tracing |
 
 ---
 
@@ -69,28 +91,11 @@ Domain-specific guidance lives in [instructions/](instructions/) — loaded auto
 
 ---
 
-## Project Overview
-
-**DEX (DataEngineX)** — data engineering and ML platform.
-- `dataenginex` — Core framework (FastAPI optional via `[api]` extra, middleware, observability, quality gates, ML lifecycle)
-
-**Stack:** Python 3.12+ | FastAPI | uv | Ruff | mypy strict | pytest | Docker | Kubernetes (ArgoCD)
-
-**Build:** `hatchling` backend + `uv` package manager | Dep groups: `dev`, `data` (PySpark/Airflow), `notebook`
-
-**Commands:**
-- Quality: `uv run poe lint` | `uv run poe lint-fix` | `uv run poe typecheck` | `uv run poe check-all`
-- Test: `uv run poe test` | `uv run poe test-unit` | `uv run poe test-integration` | `uv run poe test-cov`
-- Run: `uv run poe dev` | `uv run poe docker-up` | `uv run poe docker-down`
-- Deps: `uv run poe install` | `uv run poe security` | `uv run poe uv-sync` | `uv run poe uv-lock`
-
----
-
-## Core Principles
+## Coding Standards
 
 ### 1. Security 🔒
 - Never hardcode secrets, API keys, passwords, tokens
-- Validate all inputs at system boundaries
+- Validate all inputs at system boundaries (Pydantic)
 - Parameterized queries only (never concatenate SQL)
 - Never log PII, credentials, or sensitive data
 
@@ -104,28 +109,32 @@ Domain-specific guidance lives in [instructions/](instructions/) — loaded auto
 - Catch specific exceptions, never bare `except:`
 - Log errors with full context (structured key-value pairs)
 - Re-raise with context, never silently swallow
+- Stubs: `raise NotImplementedError("descriptive message")` — never fake data
 
 ### 4. Testing 🧪
 - Write tests alongside code — 80%+ coverage target
 - Tests are independent, use Arrange-Act-Assert
 - Mock external services, not code under test
 - Cover edge cases: empty, None, boundary, error paths
+- `asyncio_mode = "auto"` — no `@pytest.mark.asyncio` needed
+- Test paths: `tests/unit/` (isolated) · `tests/integration/` (live server)
 
 ### 5. Type Safety 🏷️
 - Type hints on all public functions (params + return)
-- `mypy --strict` on `src/dataenginex/` only (all packages use mypy strict)
+- `mypy --strict` on each repo's `src/<package>/` only
 - Validate input at API boundaries (Pydantic)
-- Use `from __future__ import annotations` in all source files
+- `from __future__ import annotations` in ALL source files
 
 ### 6. Observability 📊
-- `loguru` + `structlog` — never `print()` or stdlib `logging`
-- API/middleware: `structlog.get_logger(__name__)` with `logger.info("event", key=value)`
-- ML/backend: `from loguru import logger` with `logger.info("message %s", arg)`
+- **API/middleware:** `structlog.get_logger(__name__)` with `logger.info("event", key=value)`
+- **ML/backend:** `from loguru import logger` with `logger.info("message %s", arg)`
+- **NEVER:** `print()`, stdlib `logging`, or f-strings in log calls
 - Prometheus metrics (`http_` prefix) + OpenTelemetry tracing
 
 ### 7. Dependencies 📦
 - `uv` only (never raw pip) — pin with minimum version bounds
 - Dev deps in `[dependency-groups]` — run `poe security` to audit
+- Lock file (`uv.lock`) must always be committed — it is the reproducibility contract
 
 ### 8. Compatibility 🔄
 - API changes backwards compatible within major version
@@ -133,7 +142,7 @@ Domain-specific guidance lives in [instructions/](instructions/) — loaded auto
 
 ### 9. Git 🌿
 - Branches: `main` (prod), `dev` (integration), `feature/<desc>` or `fix/<desc>`
-- Branch-based deployment: `dev` → dex-dev, `main` → dex
+- Branch-based deployment: `dev` → staging/dev cluster, `main` → production
 - Conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`
 - Reference issues: `feat: add drift detection (#42)`
 
@@ -146,31 +155,152 @@ Domain-specific guidance lives in [instructions/](instructions/) — loaded auto
 - N+1 queries, unbounded result sets, full datasets in memory
 - New feature with no tests, or tests that depend on each other
 - API contract changes without versioning
+- Fake/constant data from unimplemented endpoints (use `NotImplementedError`)
+- Domain models in framework package (belong in application)
 
 ---
 
-## For AI Agents 🤖
+## Cross-Repo Sync Policy
 
-1. Check [instructions/](instructions/) for domain-specific guidance by file path
-2. Reference [CHECKLISTS.md](CHECKLISTS.md) for review checklists
-3. Match existing patterns in [src/](../src/) and [tests/](../tests/)
-4. Config: [pyproject.toml](../pyproject.toml) | [poe_tasks.toml](../poe_tasks.toml) | [.pre-commit-config.yaml](../.pre-commit-config.yaml)
+Every deployment (dev → main PR merge) must verify these are consistent across all 6 repos.
 
-**When generating code:** include type hints, docstrings, error handling, and tests. Use structured logging (key-value pairs, not f-strings). Create/use images, design diagrams wherever required.
+### Workflows (must exist in all repos)
 
-**After generating code:** run the full validation pipeline in this exact order:
+| Workflow | Purpose | Template source |
+|----------|---------|----------------|
+| `ci.yml` | Lint · typecheck · test | Repo-specific |
+| `enforce-dev-to-main.yml` | Block PRs not from `dev` | Copy from dex |
+| `claude.yml` | @claude mentions on issues/PRs | Copy from dex |
+| `claude-code-review.yml` | Auto code review on PRs | Copy from dex |
+| `security.yml` | Trivy + CodeQL scanning | Copy from dex |
 
-1. **Lint:** `uv run poe lint` (or `uv run python -m ruff check src/ tests/`)
-2. **Typecheck:** `uv run poe typecheck` (or `uv run python -m mypy src/dataenginex/ --strict`)
-3. **Unit tests:** `uv run poe test` (or `uv run python -m pytest tests/ -x --tb=short -q`)
-4. **Run the real app:** Start the server with `uv run python examples/02_api_quickstart.py` and verify:
-   - Health probes: `curl http://localhost:8000/health`, `/ready`, `/startup`
-   - Existing endpoints still work: `/`, `/echo`, `/api/v1/data/sources`, `/api/v1/system/config`
-   - New/changed endpoints respond with correct data (not just 200 OK — check response bodies)
-   - Metrics endpoint: `curl http://localhost:8000/metrics`
-   - OpenAPI spec includes all routes: `curl http://localhost:8000/openapi.json`
-5. **Standalone module validation:** Import and run key classes outside the API to verify they work independently (not just through endpoints)
+### Repo Files (must exist in all repos)
 
-Tests and lint passing is necessary but NOT sufficient. The real app must boot, serve requests, and return correct data. Never skip step 4.
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` | Repo-specific AI context |
+| `README.md` | Project documentation |
+| `.gitignore` | Ignore build/secrets/cache |
+| `pyproject.toml` | Package config |
+| `uv.lock` | Pinned dependency tree |
+| `tasks/todo.md` | Active task board |
+| `tasks/lessons.md` | Lessons learned |
+| `tasks/findings.md` | Research log |
+| `.github/PULL_REQUEST_TEMPLATE.md` | PR checklist |
+| `.github/dependabot.yml` | Dependency auto-updates |
+| `CODEOWNERS` | Review assignment |
+| `LICENSE` | MIT license |
 
-**Before submitting PRs:** Update/remove all the files in the entire project whether they are affeted or not. This is to ensure that the codebase is consistent and up to date with the latest changes. Bumping up versions.This includes code, tests, workflows, configs, documentation, all files in .github folder, comments, and any relevant files that may be impacted by the changes made in the PR.
+### Sync Procedure
+
+When any shared file changes in `dex`, propagate to all other repos:
+1. Update the source file in `dex`
+2. Copy to other repos (checkout dev, write, commit, push)
+3. Open PRs from `dev` → `main` in each affected repo
+
+Do NOT copy dex-only workflows (`pypi-publish.yml`, `release-dataenginex.yml`) to other repos.
+
+---
+
+## For Claude Code 🤖
+
+### Context Hierarchy
+
+Claude Code reads `CLAUDE.md` files automatically:
+- **Workspace:** `../CLAUDE.md` — loaded for all repos, canonical source of truth
+- **Repo:** `<repo>/CLAUDE.md` — repo-specific commands, key files, architecture
+
+Always check the repo's `CLAUDE.md` before writing code. Match existing patterns.
+
+### Tools — Use Dedicated Tools, Not Shell
+
+| Task | Tool to use | Never use |
+|------|-------------|-----------|
+| Find files by pattern | `Glob` | `find`, `ls` |
+| Search file contents | `Grep` | `grep`, `rg` |
+| Read files | `Read` | `cat`, `head`, `tail` |
+| Edit files | `Edit` | `sed`, `awk` |
+| Create files | `Write` | `echo >`, heredocs |
+| Shell/system ops | `Bash` | — |
+| Task tracking | `TodoWrite` | — |
+| Research/exploration | `Agent (Explore)` | — |
+| Architecture planning | `Agent (Plan)` | — |
+
+### Plan Mode
+
+Enter plan mode (`EnterPlanMode`) before ANY non-trivial task (3+ steps or architectural changes). Write the plan to `tasks/todo.md`. Get alignment before implementation.
+
+### Subagents
+
+Use the `Agent` tool with the appropriate subagent type:
+- `Explore` — codebase search, keyword search, file pattern matching
+- `Plan` — architecture design, implementation strategy
+- `general-purpose` — multi-step research, parallel analysis
+
+Group independent tasks in parallel waves. Sequence dependent ones.
+
+### Task Tracking
+
+Use `TodoWrite` to create and update task lists. Mark each item complete immediately when done — don't batch. This keeps the user informed of progress.
+
+### Memory System
+
+Persist cross-session context in `/home/jay/.claude/projects/<project>/memory/`:
+- `user_*.md` — user preferences, role, expertise
+- `feedback_*.md` — corrections and behavior guidance
+- `project_*.md` — ongoing work, decisions, deadlines
+- `reference_*.md` — pointers to external systems
+
+Read memory when the user references prior work. Write memory after corrections or when learning important context.
+
+### Skills (Slash Commands)
+
+Available skills in this workspace:
+- `/new-feature` — scaffold a new feature end-to-end
+- `/validate` — run full validation pipeline (lint + typecheck + test)
+- `/commit` — conventional commit with co-author tag
+- `/simplify` — review changed code for quality and fix issues
+
+### Context7 MCP Rule
+
+**Always use Context7 MCP** when needing library/API documentation, code generation, or setup steps for FastAPI, PySpark, Pydantic, Airflow, NiceGUI, or any third-party library — without waiting for the user to ask. Add `use context7` to research prompts.
+
+### Validation Pipeline (Non-Negotiable Order)
+
+After ANY code change run in this exact order:
+
+1. `uv run poe lint` — Ruff lint
+2. `uv run poe typecheck` — mypy strict
+3. `uv run poe test` — pytest
+4. Start the real server and verify endpoints (see repo CLAUDE.md for commands)
+5. Standalone module import check — verify modules work independently
+
+**Tests passing ≠ app working. Step 4 is mandatory.**
+
+### Before Submitting PRs
+
+- Run the full validation pipeline
+- Sync all affected files across the workspace (code, tests, workflows, configs, docs)
+- Bump versions where appropriate
+- Verify Cross-Repo Sync Policy compliance
+- Check [CHECKLISTS.md](CHECKLISTS.md) for domain-specific review checklist
+
+---
+
+## Developer Tools
+
+| Tool | Purpose | Usage |
+|------|---------|-------|
+| `llmfit` | Right-size LLM models to hardware | `llmfit recommend --json --use-case coding --limit 5` |
+| Context7 MCP | Up-to-date library docs | Add `use context7` to prompts |
+
+**Local LLM (Ollama):** 15.5 GB RAM + Quadro T2000 (4 GB VRAM). Use MoE models (Qwen3-Coder-30B-A3B at Q4_K_M). Dense models >8B will swap-thrash. Run `llmfit` before pulling new models.
+
+---
+
+## Reference
+
+- [instructions/](instructions/) — Domain-specific guidance (auto-loaded by file path)
+- [CHECKLISTS.md](CHECKLISTS.md) — Code review checklists by domain
+- [agents/](agents/) — Specialized agent definitions
+- [prompts/](prompts/) — Reusable prompt templates
