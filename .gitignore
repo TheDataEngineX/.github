@@ -1,0 +1,5 @@
+# Personal career files — stay local only
+portfolio/
+
+# Wiki repo clones — checked out locally for push, never committed here
+wiki-content/wiki-*/

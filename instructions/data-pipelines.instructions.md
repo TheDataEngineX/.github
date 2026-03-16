@@ -1,35 +1,58 @@
 ---
-applyTo: "src/**/data/**/*.py,src/**/lakehouse/**/*.py,src/**/warehouse/**/*.py,examples/07_*.py"
+applyTo: "src/**/data/**/*.py,src/**/pipeline/**/*.py,src/**/connectors/**/*.py,src/**/lineage/**/*.py,src/**/quality/**/*.py"
 ---
 
-# Data Pipelines — Project Specifics
+# Data Pipeline Standards
 
-## Architecture
-- Medallion pattern: Bronze (raw) → Silver (cleaned) → Gold (aggregated)
-- Pipelines must be idempotent — log processing counts/IDs
+Extends `python.instructions.md`.
 
-## Orchestration
-- Airflow DAGs: use `default_args`, XCom, clear task dependencies
-- PySpark: for large-scale transforms (see `examples/08_spark_ml.py`, `examples/09_feature_engineering.py`)
+## Medallion architecture
 
-## Quality & Governance
-- `SchemaRegistry`: `src/dataenginex/data/registry.py` (schema versioning)
-- `DataCatalog`: `src/dataenginex/lakehouse/catalog.py` (dataset discovery)
-- Data contracts: Pydantic schemas in `src/dataenginex/core/schemas.py`
-- Validators: `src/dataenginex/core/validators.py`
+- **Bronze** — raw ingestion only, schema validated at entry, no transformation
+- **Silver** — cleaned, deduplicated, typed, joined
+- **Gold** — aggregated, business-ready, quality-gated
 
-## Transform & Lineage
-- `TransformPipeline`: composable transforms (`src/dataenginex/warehouse/transforms.py`)
-- `PersistentLineage`: data lineage tracking (`src/dataenginex/warehouse/lineage.py`)
-- Partitioning: `DatePartitioner`, `HashPartitioner` (`src/dataenginex/lakehouse/partitioning.py`)
-- Profiling: `src/dataenginex/data/profiler.py`
+Never skip layers. Never write gold-layer logic in bronze ingestion.
 
-## Project Map
-- `src/dataenginex/data/` — connectors, profiler, registry
-- `src/dataenginex/lakehouse/` — catalog, partitioning, storage
-- `src/dataenginex/warehouse/` — transforms, lineage, metrics
-- `examples/07_api_ingestion.py` — HTTP API ingestion with medallion architecture
-- `examples/08_spark_ml.py` — PySpark feature engineering + model training
+## Idempotency
 
-## Testing
-- See `tests/unit/test_data.py`, `test_medallion.py`, `test_warehouse.py`
+Every pipeline must be safe to re-run:
+
+- Watermarks or `updated_at` for incremental extraction — never full-reload by default
+- Deduplication in silver, not bronze
+- Writes must be upsert or partition-replace — never blind append to final tables
+
+## Quality gates
+
+- Validate schema at the bronze boundary (`SchemaRegistry`)
+- Silver: completeness ≥ 0.95, uniqueness on key columns
+- Gold: completeness ≥ 0.99, freshness ≤ configured SLA
+- Fail loudly on quality violations — never silently pass bad data downstream
+
+## Connectors
+
+- Every connector extends `BaseConnector`
+- Credentials from env vars / Pydantic settings — never hardcoded
+- Specific exceptions: `ConnectionError`, `TimeoutError` — not bare `Exception`
+- Log row counts, source, and destination at each stage
+
+## Lineage
+
+- Track column-level lineage via `LineageTracker` — every transform must be registered
+- Never drop lineage events silently — log failures
+
+## Performance
+
+- Never load full datasets into memory — use chunked reads or streaming
+- No unbounded result sets — always paginate or limit
+- Log record counts and timing at each stage
+
+## Checklist
+
+- [ ] Pipeline is idempotent (safe to re-run)
+- [ ] Schema validated at bronze entry point
+- [ ] Quality scorecard at silver and gold
+- [ ] Connector credentials from env vars
+- [ ] Lineage events registered for all transforms
+- [ ] Row counts logged at each stage
+- [ ] No full-dataset in-memory load

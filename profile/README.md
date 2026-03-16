@@ -80,8 +80,7 @@ graph LR
 **Install the core package:**
 
 ```bash
-uv add dataenginex           # core
-uv add dataenginex[api]      # + FastAPI server
+uv add dataenginex           # core (FastAPI server included)
 ```
 
 **Run from source:**
@@ -113,6 +112,38 @@ docker compose -f docker-compose.monitoring.yml up -d
 # Prometheus → http://localhost:9090
 # Jaeger     → http://localhost:16686
 ```
+
+---
+
+## Roadmap
+
+What's shipping next across the platform:
+
+### Now — Core Completion
+
+- MLflow integration — replace custom JSON model registry with MLflow tracking + lifecycle stages
+- DataSecops module — PII detection, field masking, structured audit logs
+- PySpark + Databricks connectors for `datadex` pipeline engine
+- Cloud storage backends (S3, GCS, BigQuery) in `dex` lakehouse
+- Complete DB connectors (Postgres, Kafka, MySQL) in `datadex`
+
+### Next — Load Testing + Observability
+
+- Locust load tests across all API services
+- Grafana dashboard per component wired to the infradex monitoring stack
+- Full Terraform + Ansible + ArgoCD deploy verified end-to-end
+
+### Then — Demo Projects
+
+- Language-Learning Agent (`agentdex`) — memory, planning, tool use, multi-model routing
+- Book Recommender — Open Library → embeddings → Qdrant → recommendations
+- Movie Recommender — MovieLens → collaborative filtering + content-based fallback
+
+### Later — Infrastructure & Distribution
+
+- Docker images published to GHCR (`ghcr.io/thedataenginex/*`)
+- Docs site live at [thedataenginex.org](https://thedataenginex.org) via Netlify
+- Public CareerDEX demo — semantic job search powered by the platform
 
 ---
 

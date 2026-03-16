@@ -2,29 +2,56 @@
 applyTo: "src/**/api/**/*.py"
 ---
 
-# FastAPI — Project Specifics
+# FastAPI Standards
 
-## Routing & Responses
-- Versioned routes: `APIRouter(prefix="/api/v1", tags=["v1"])`
-- Declare `response_model=` on every endpoint
-- Pydantic models for all request/response shapes
-- Custom `custom_openapi()` in main.py for schema customization
+Extends `python.instructions.md`.
 
-## Lifespan & Middleware
-- `@asynccontextmanager` lifespan for startup/shutdown
-- Middleware stack (order matters): request logging → metrics → auth → rate limit
-- Uses `BaseHTTPMiddleware` (not `Depends()`) — keeps cross-cutting logic out of route signatures
-- 3 global exception handlers: `RequestValidationError`, `StarletteHTTPException`, catch-all `Exception`
-- Lazy imports inside route handlers (e.g., `PipelineConfig`) to avoid circular deps
+## Endpoints
 
-## Project Map
-- Entry: `examples/02_api_quickstart.py` (minimal working example)
-- Auth: `src/dataenginex/api/auth.py` — pure-Python HS256 JWT (no pyjwt dependency)
-- Health: `src/dataenginex/api/health.py` — TCP checks for DB, cache, external API
-- Pagination: `src/dataenginex/api/pagination.py` (cursor-based, base64 opaque cursors)
-- Rate limiting: `src/dataenginex/api/rate_limit.py` (token-bucket) | Errors: `src/dataenginex/api/errors.py`
-- Metrics: `src/dataenginex/middleware/metrics.py` (`http_requests_total`, `http_request_duration_seconds`)
+- Every endpoint must have `response_model=` — no untyped responses
+- Correct HTTP verbs: GET (read), POST (create), PATCH (partial update), PUT (replace), DELETE
+- Versioned routes: `/api/v1/`, `/api/v2/` — never unversioned business endpoints
+- Docstring on every endpoint (shows in OpenAPI)
 
-## Local Dev
-- `poe dev` → runs `examples/02_api_quickstart.py` on port 8000
-- Docs: `http://localhost:8000/docs`
+## Request / Response models
+
+- Pydantic v2 models for all request bodies and responses
+- Never pass raw dicts through business logic — always typed models
+- Never expose internal IDs or implementation details in response schemas
+
+## Auth
+
+- Protected endpoints check auth via lifespan middleware — not inline per endpoint
+- Auth: pure-Python HS256 JWT (no `pyjwt` dependency)
+- Return `401` for missing/invalid token, `403` for insufficient permissions
+- Never log the token or any credential
+
+## Middleware order (lifespan)
+
+Request logging → Prometheus metrics → auth → rate limiting. Do not reorder.
+
+## Error responses
+
+All errors return a consistent JSON body via `HTTPException`:
+
+```json
+{"detail": "human-readable message", "code": "MACHINE_READABLE_CODE"}
+```
+
+Never return raw strings as error bodies.
+
+## Observability
+
+- Prometheus: `http_requests_total`, `http_request_duration_seconds` on every endpoint
+- Use `http_` prefix for all HTTP metrics
+- OpenTelemetry span per request — propagate trace context from headers
+
+## Checklist
+
+- [ ] `response_model=` on every endpoint
+- [ ] Pydantic model for every request body
+- [ ] Versioned route (`/api/v1/`)
+- [ ] Auth via middleware (not inline)
+- [ ] Prometheus metrics updated
+- [ ] Errors use `HTTPException` with JSON detail
+- [ ] Docstring on endpoint

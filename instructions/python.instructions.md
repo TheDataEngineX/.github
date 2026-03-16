@@ -2,24 +2,53 @@
 applyTo: "src/**/*.py"
 ---
 
-# Python — Project Specifics
+# Python Standards
 
-## Style (Ruff: E, F, I, B, UP, SIM, C90 — max complexity 8)
-- Line length: 100 | `snake_case` functions/vars | `PascalCase` classes | `StrEnum` for enums
-- `from __future__ import annotations` in all source files
-- Imports: stdlib → third-party → local (auto-sorted by ruff)
-- Run `poe check-all` (lint + typecheck + test) before committing
-- `mypy --strict` covers `src/dataenginex/` only — all packages use mypy strict
+## Required in every source file
 
-## Logging — Dual Stack
-- API/middleware: `logger = structlog.get_logger(__name__)` → `logger.info("event", key=value)`
-- ML/backend: `from loguru import logger` → `logger.info("message %s", arg)`
-- `X-Request-ID` propagated via `structlog.contextvars`
-- stdlib `logging` is intercepted → loguru (never use it directly)
+- `from __future__ import annotations` — first import, always
+- Type hints on all public functions: parameters and return type
+- `mypy --strict` must pass — no `# type: ignore` without a comment explaining why
 
-## Key Patterns
-- Pydantic: centralized in `src/dataenginex/core/schemas.py` with `model_config = {"json_schema_extra": {"examples": [...]}}`
-- Config: `python-dotenv` | Key env vars: `LOG_LEVEL`, `LOG_FORMAT`, `DEX_AUTH_ENABLED`, `DEX_JWT_SECRET`
-- Error hierarchy: `APIHTTPException` → `BadRequestError`, `NotFoundError`, `ServiceUnavailableError`
-- Validators: `src/dataenginex/core/validators.py`
-- Observability: `src/dataenginex/middleware/`
+## Style
+
+- Ruff rules: E, F, I, B, UP, SIM, C90 · line length: 100
+- Max function length: 50 lines · max parameters: 4
+- Names must be descriptive — no `x`, `temp`, `data`, `result`
+- Comments explain **why**, not what
+
+## Logging
+
+- API/middleware: `structlog.get_logger(__name__)` → `logger.info("event", key=value)`
+- ML/backend: `from loguru import logger` → `logger.info("message {}", value)`
+- Never: `print()`, `logging.getLogger()`, f-strings in log calls
+- Never log PII, tokens, passwords, or raw request bodies
+
+## Error handling
+
+- Catch specific exceptions — never bare `except:`
+- Log with full context before re-raising: `logger.error("failed", error=e, context=...)`
+- Chain exceptions: `raise SomeError("descriptive message") from e`
+- Stubs must `raise NotImplementedError("description")` — never return fake data
+
+## Security
+
+- No hardcoded secrets, API keys, tokens, or passwords — use env vars / Pydantic settings
+- Validate all external input at boundaries (Pydantic models)
+- Parameterised queries only — never string-concatenate SQL
+- No `pickle.loads` on untrusted data
+
+## Dependencies
+
+- `uv` only — never `pip install` in code or docs
+- New deps go in `pyproject.toml` with minimum version bounds
+- Dev-only deps go in `[dependency-groups]`
+
+## Checklist
+
+- [ ] `from __future__ import annotations` present
+- [ ] All public functions have type hints
+- [ ] No `print()` calls
+- [ ] No bare `except:`
+- [ ] No hardcoded secrets
+- [ ] mypy passes with `--strict`
