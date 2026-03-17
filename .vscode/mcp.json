@@ -1,0 +1,51 @@
+{
+	"servers": {
+		"context7": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@upstash/context7-mcp@latest"
+			],
+			"type": "stdio"
+		},
+		"filesystem": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-filesystem",
+				"${workspaceFolder}"
+			]
+		},
+		"git": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"mcp-server-git",
+				"--repository",
+				"${workspaceFolder}"
+			]
+		},
+		"fetch": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"mcp-server-fetch"
+			]
+		},
+		"cloudflare": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@cloudflare/mcp-server-cloudflare",
+				"run",
+				"${env:CLOUDFLARE_ACCOUNT_ID}"
+			],
+			"env": {
+				"CLOUDFLARE_API_TOKEN": "${env:CLOUDFLARE_API_TOKEN}",
+				"CLOUDFLARE_ACCOUNT_ID": "${env:CLOUDFLARE_ACCOUNT_ID}"
+			}
+		}
+	}
+}
