@@ -8,15 +8,16 @@ applyTo: ".github/workflows/**/*.yml"
 
 | Action | Version |
 | --- | --- |
-| `actions/checkout` | `@v4` |
-| `actions/setup-python` | `@v5` |
-| `actions/upload-artifact` | `@v4` |
-| `actions/download-artifact` | `@v4` |
-| `astral-sh/setup-uv` | `@v5` |
-| `codecov/codecov-action` | `@v4` |
-| `github/codeql-action/*` | `@v3` |
+| `actions/checkout` | `@v6` |
+| `actions/setup-python` | `@v6` |
+| `actions/upload-artifact` | `@v7` |
+| `actions/download-artifact` | `@v8` |
+| `astral-sh/setup-uv` | `@v7` |
+| `codecov/codecov-action` | `@v5` |
+| `github/codeql-action/*` | `@v4` |
+| `actions/github-script` | `@v8` |
 
-Never use `@latest`, `@main`, or non-existent versions (`@v6`, `@v7`, `@v8`).
+Always pin to the current major tag. Verify against actual workflow files before documenting.
 
 ## Permissions
 
@@ -43,12 +44,12 @@ test:
 ## Python setup (always use uv)
 
 ```yaml
-- uses: astral-sh/setup-uv@v5
+- uses: astral-sh/setup-uv@v7
   with:
     version: "latest"
-- uses: actions/setup-python@v5
+- uses: actions/setup-python@v6
   with:
-    python-version: "3.12"
+    python-version: "3.13"
 - run: uv sync
 ```
 
@@ -57,7 +58,7 @@ Never `pip install` in workflows.
 ## Coverage upload
 
 ```yaml
-- uses: codecov/codecov-action@v4
+- uses: codecov/codecov-action@v5
   with:
     flags: <repo-name>
     fail_ci_if_error: false
