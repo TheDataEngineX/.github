@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+# setup-workspace.sh — DataEngineX workspace bootstrap
+#
+# Creates symlinks from workspace root to .github/ so that:
+#   - CLAUDE.md   → .github/CLAUDE.md
+#   - .claude/    → .github/.claude/
+#   - .vscode/    → .github/.vscode/
+#
+# Also generates .github/workspace.env with current machine specs.
+# Run automatically on VS Code workspace open (see .vscode/tasks.json).
+# Safe to run multiple times — idempotent.
+
+set -euo pipefail
+
+WORKSPACE="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+GITHUB_DIR="$WORKSPACE/.github"
+
+echo "DataEngineX workspace setup"
+echo "Workspace: $WORKSPACE"
+echo ""
+
+# ── CLAUDE.md symlink ────────────────────────────────────────────────────────
+CLAUDE_TARGET="$GITHUB_DIR/CLAUDE.md"
+CLAUDE_LINK="$WORKSPACE/CLAUDE.md"
+
+if [ -L "$CLAUDE_LINK" ] && [ "$(readlink "$CLAUDE_LINK")" = "$CLAUDE_TARGET" ]; then
+    echo "✓ CLAUDE.md symlink already correct"
+else
+    [ -e "$CLAUDE_LINK" ] && rm -f "$CLAUDE_LINK"
+    ln -s "$CLAUDE_TARGET" "$CLAUDE_LINK"
+    echo "✓ Created CLAUDE.md → .github/CLAUDE.md"
+fi
+
+# ── .claude/ symlink ─────────────────────────────────────────────────────────
+CLAUDE_DIR_TARGET="$GITHUB_DIR/.claude"
+CLAUDE_DIR_LINK="$WORKSPACE/.claude"
+
+if [ -L "$CLAUDE_DIR_LINK" ] && [ "$(readlink "$CLAUDE_DIR_LINK")" = "$CLAUDE_DIR_TARGET" ]; then
+    echo "✓ .claude/ symlink already correct"
+else
+    if [ -d "$CLAUDE_DIR_LINK" ] && [ ! -L "$CLAUDE_DIR_LINK" ]; then
+        echo "  Backing up existing .claude/ → .claude.bak/"
+        mv "$CLAUDE_DIR_LINK" "${CLAUDE_DIR_LINK}.bak"
+    fi
+    ln -s "$CLAUDE_DIR_TARGET" "$CLAUDE_DIR_LINK"
+    echo "✓ Created .claude/ → .github/.claude/"
+fi
+
+# ── .vscode/ symlink ─────────────────────────────────────────────────────────
+VSCODE_TARGET="$GITHUB_DIR/.vscode"
+VSCODE_LINK="$WORKSPACE/.vscode"
+
+if [ -L "$VSCODE_LINK" ] && [ "$(readlink "$VSCODE_LINK")" = "$VSCODE_TARGET" ]; then
+    echo "✓ .vscode/ symlink already correct"
+else
+    if [ -d "$VSCODE_LINK" ] && [ ! -L "$VSCODE_LINK" ]; then
+        echo "  Backing up existing .vscode/ → .vscode.bak/"
+        mv "$VSCODE_LINK" "${VSCODE_LINK}.bak"
+    fi
+    ln -s "$VSCODE_TARGET" "$VSCODE_LINK"
+    echo "✓ Created .vscode/ → .github/.vscode/"
+fi
+
+# ── settings.local.json ──────────────────────────────────────────────────────
+LOCAL_SETTINGS="$GITHUB_DIR/.claude/settings.local.json"
+LOCAL_EXAMPLE="$GITHUB_DIR/.claude/settings.local.json.example"
+
+if [ ! -f "$LOCAL_SETTINGS" ] && [ -f "$LOCAL_EXAMPLE" ]; then
+    cp "$LOCAL_EXAMPLE" "$LOCAL_SETTINGS"
+    echo "✓ Created settings.local.json from example (fill in API keys if needed)"
+else
+    echo "✓ settings.local.json already exists"
+fi
+
+# ── workspace.env — machine-specific config ──────────────────────────────────
+ENV_FILE="$GITHUB_DIR/workspace.env"
+
+echo ""
+echo "Detecting system configuration..."
+
+# RAM — total physical memory
+SYSTEM_RAM=$(free -h --si 2>/dev/null | awk '/^Mem:/{print $2}' || echo "unknown")
+
+# GPU — name and VRAM via nvidia-smi, fallback to lspci, fallback unknown
+if command -v nvidia-smi &>/dev/null; then
+    GPU_NAME=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | head -1 || echo "unknown")
+    GPU_VRAM=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits 2>/dev/null \
+        | head -1 | awk '{printf "%.0fMB", $1}' || echo "unknown")
+elif command -v lspci &>/dev/null; then
+    GPU_NAME=$(lspci 2>/dev/null | grep -i 'vga\|3d\|display' | head -1 | sed 's/.*: //' || echo "unknown")
+    GPU_VRAM="unknown"
+else
+    GPU_NAME="unknown"
+    GPU_VRAM="unknown"
+fi
+
+# CPU cores
+CPU_CORES=$(nproc 2>/dev/null || echo "unknown")
+
+# Python version (first available)
+PYTHON_VERSION=$(python3 --version 2>/dev/null | awk '{print $2}' || echo "unknown")
+
+# uv version
+UV_VERSION=$(uv --version 2>/dev/null | awk '{print $2}' || echo "unknown")
+
+# Recommended LLM from llmfit (best coding model for this hardware)
+if command -v llmfit &>/dev/null; then
+    RECOMMENDED_LOCAL_LLM=$(llmfit recommend --json --use-case coding --limit 1 2>/dev/null \
+        | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[0]['id'] if d else 'run llmfit to detect')" \
+        2>/dev/null || echo "run: llmfit recommend --use-case coding --limit 5")
+else
+    RECOMMENDED_LOCAL_LLM="run: llmfit recommend --use-case coding --limit 5"
+fi
+
+# Read repo versions from pyproject.toml files
+read_version() {
+    local pyproject="$WORKSPACE/$1/pyproject.toml"
+    if [ -f "$pyproject" ]; then
+        python3 -c "import tomllib; t=tomllib.load(open('$pyproject','rb')); print(t['project']['version'])" 2>/dev/null || echo "unknown"
+    else
+        echo "unknown"
+    fi
+}
+
+VERSION_DEX=$(read_version "dex")
+VERSION_DATADEX=$(read_version "datadex")
+VERSION_AGENTDEX=$(read_version "agentdex")
+VERSION_CAREERDEX=$(read_version "careerdex")
+VERSION_DEX_STUDIO=$(read_version "dex-studio")
+VERSION_INFRADEX=$(read_version "infradex")
+
+cat > "$ENV_FILE" <<EOF
+# workspace.env — auto-generated by setup-workspace.sh
+# DO NOT edit manually — re-run setup-workspace.sh to refresh
+# This file is gitignored (machine-specific)
+
+# ── Machine ────────────────────────────────────────────────────────────────
+WORKSPACE_ROOT=$WORKSPACE
+SYSTEM_RAM=$SYSTEM_RAM
+CPU_CORES=$CPU_CORES
+GPU_NAME=$GPU_NAME
+GPU_VRAM=$GPU_VRAM
+PYTHON_VERSION=$PYTHON_VERSION
+UV_VERSION=$UV_VERSION
+RECOMMENDED_LOCAL_LLM=$RECOMMENDED_LOCAL_LLM
+
+# ── Repo Versions ──────────────────────────────────────────────────────────
+VERSION_DEX=$VERSION_DEX
+VERSION_DATADEX=$VERSION_DATADEX
+VERSION_AGENTDEX=$VERSION_AGENTDEX
+VERSION_CAREERDEX=$VERSION_CAREERDEX
+VERSION_DEX_STUDIO=$VERSION_DEX_STUDIO
+VERSION_INFRADEX=$VERSION_INFRADEX
+
+# ── Generated ──────────────────────────────────────────────────────────────
+GENERATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+EOF
+
+echo "✓ Generated workspace.env"
+echo "  RAM: $SYSTEM_RAM | GPU: $GPU_NAME ($GPU_VRAM) | Python: $PYTHON_VERSION"
+echo "  Recommended LLM: $RECOMMENDED_LOCAL_LLM"
+
+echo ""
+echo "Workspace ready. Run 'cat .github/workspace.env' to review system config."

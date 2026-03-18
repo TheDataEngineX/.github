@@ -1,0 +1,23 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "",
+    "ANTHROPIC_AUTH_TOKEN": "",
+    "ANTHROPIC_API_KEY": "",
+    "ANTHROPIC_MODEL": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(gh run *)",
+      "Bash(gh api *)",
+      "Bash(gh pr *)",
+      "Bash(git fetch *)",
+      "Bash(uv run *)",
+      "Bash(echo *)",
+      "Bash(python3 *)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "context7"
+  ]
+}
