@@ -1,5 +1,7 @@
 # Workspace Config Optimization — Design Spec
 
+> **STATUS: HISTORICAL** — Implemented March 2026. Release flow, version bump tasks (`version-patch/minor/major`), and `dataenginex-v` tag format documented here are superseded. Current state: release-please automation, `v{version}` tags, pre-commit hook for version bumps.
+
 **Date:** 2026-03-17
 **Author:** jaymyaka
 **Scope:** `.github/`, `.claude/`, `.vscode/`, global `~/.claude/`, workspace root config files

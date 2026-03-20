@@ -1,0 +1,66 @@
+# Reusable workflow — called from each repo's .github/workflows/release-please.yml
+#
+# On push to main, release-please:
+#   1. Reads conventional commits since the last release tag
+#   2. Creates/updates a Release PR that bumps pyproject.toml version + CHANGELOG.md
+#   3. When the Release PR is merged → creates git tag + GitHub Release
+#
+# After a Release PR is opened/updated, uv.lock is regenerated and committed
+# to the PR branch so the lock file stays in sync with the version bump.
+#
+# Callers need only:
+#   jobs:
+#     release:
+#       uses: TheDataEngineX/.github/.github/workflows/release-please.yml@main
+#       secrets: inherit
+
+name: Release Please (reusable)
+
+on:
+  workflow_call:
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release-please
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      # ── Keep uv.lock in sync with version bump ──────────────────────────────
+      # When release-please opens or updates a Release PR, the PR bumps
+      # pyproject.toml but not uv.lock. This step checks out the PR branch,
+      # regenerates uv.lock, and pushes the update back.
+      - name: Checkout Release PR branch
+        if: ${{ steps.release-please.outputs.pr }}
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ fromJson(steps.release-please.outputs.pr).headBranchName }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up uv
+        if: ${{ steps.release-please.outputs.pr }}
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "latest"
+
+      - name: Regenerate uv.lock for version bump
+        if: ${{ steps.release-please.outputs.pr }}
+        run: |
+          uv lock
+          if git diff --quiet uv.lock; then
+            echo "uv.lock already up to date — no commit needed"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add uv.lock
+            git commit -m "chore: regenerate uv.lock for version bump"
+            git push
+          fi

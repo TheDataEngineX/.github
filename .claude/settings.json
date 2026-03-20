@@ -2,7 +2,7 @@
   "autoUpdatesChannel": "latest",
   "statusLine": {
     "type": "command",
-    "command": "jq -r '\"[\\(.model.display_name)] \\(.context_window.used_percentage // 0)% context\"'",
+    "command": "b=$(git branch --show-current 2>/dev/null); [ -n \"$b\" ] && echo \"[$b]\" || echo \"\"",
     "padding": 2
   },
   "permissions": {
