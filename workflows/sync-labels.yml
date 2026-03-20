@@ -25,13 +25,28 @@ jobs:
           - dex-studio
           - infradex
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Sync labels
-        uses: crazy-max/ghaction-github-labeler@v5
-        with:
-          github-token: ${{ secrets.LABELS_SYNC_TOKEN }}
-          repository: TheDataEngineX/${{ matrix.repo }}
-          yaml-file: labels.yml
-          skip-delete: false
-          dry-run: false
+      - name: Sync labels to ${{ matrix.repo }}
+        env:
+          GH_TOKEN: ${{ secrets.LABELS_SYNC_TOKEN }}
+        run: |
+          pip install pyyaml -q
+          python3 - <<'PYEOF'
+          import json, subprocess, yaml
+          with open('labels.yml') as f:
+              labels = yaml.safe_load(f) or []
+          repo = "TheDataEngineX/${{ matrix.repo }}"
+          r = subprocess.run(
+              ['gh', 'label', 'list', '--repo', repo, '--json', 'name', '--limit', '200'],
+              capture_output=True, text=True, check=True
+          )
+          existing = {l['name'] for l in json.loads(r.stdout)}
+          for label in labels:
+              name = label.get('name', '')
+              color = str(label.get('color', '')).lstrip('#')
+              desc = label.get('description', '') or ''
+              cmd = ['gh', 'label', 'edit' if name in existing else 'create',
+                     name, '--repo', repo, '--color', color, '--description', desc]
+              subprocess.run(cmd, check=True)
+          PYEOF
