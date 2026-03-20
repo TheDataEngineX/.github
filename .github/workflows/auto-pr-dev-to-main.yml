@@ -1,15 +1,15 @@
-# Reusable workflow — auto-creates a PR from dev → main and enables auto-merge.
+# Reusable workflow — auto-creates a PR from dev to main and enables auto-merge.
 # Triggered on every push to dev (i.e., after a feature PR is merged to dev).
 # Uses merge commit (not squash) to preserve individual conventional commits for
 # release-please to read when determining the next version bump.
 #
 # Prerequisites (one-time per repo, GitHub UI):
-#   1. Settings → General → Allow auto-merge ✓
-#   2. Settings → Branches → branch protection on 'main':
+#   1. Settings -> General -> Allow auto-merge
+#   2. Settings -> Branches -> branch protection on 'main':
 #      - Require status checks: CI + enforce-dev-to-main
 #      - Require branches to be up to date before merging
 
-name: Auto PR — dev → main (reusable)
+name: Auto PR - dev to main (reusable)
 
 on:
   workflow_call:
@@ -23,7 +23,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Create or update PR (dev → main)
+      - name: Create or update PR (dev to main)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
@@ -31,7 +31,7 @@ jobs:
           # Skip if dev has no commits ahead of main
           AHEAD=$(gh api "repos/$GH_REPO/compare/main...dev" --jq '.ahead_by')
           if [ "$AHEAD" = "0" ]; then
-            echo "dev is already in sync with main — nothing to do"
+            echo "dev is already in sync with main - nothing to do"
             exit 0
           fi
           echo "dev is $AHEAD commit(s) ahead of main"
@@ -45,16 +45,14 @@ jobs:
             --jq '.[0].number')
 
           if [ -n "$PR_NUMBER" ]; then
-            echo "PR #$PR_NUMBER already exists — ensuring auto-merge is enabled"
+            echo "PR #$PR_NUMBER already exists - ensuring auto-merge is enabled"
           else
+            BODY="Automated PR: dev -> main. Auto-merge enabled - merge-commits when all required checks pass (CI + enforce-dev-to-main)."
             gh pr create \
               --base main \
               --head dev \
-              --title "chore: sync dev → main" \
-              --body "Automated PR: \`dev\` → \`main\`
-
-> Auto-merge is enabled — will merge once all required checks pass (CI + enforce-dev-to-main).
-> This PR was created automatically on push to \`dev\`."
+              --title "chore: sync dev -> main" \
+              --body "$BODY"
 
             PR_NUMBER=$(gh pr list \
               --base main \
