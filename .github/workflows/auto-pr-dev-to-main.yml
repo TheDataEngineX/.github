@@ -47,14 +47,12 @@ jobs:
           if [ -n "$PR_NUMBER" ]; then
             echo "PR #$PR_NUMBER already exists — ensuring auto-merge is enabled"
           else
+            BODY="Automated PR: dev -> main. Auto-merge enabled - merge-commits when all required checks pass (CI + enforce-dev-to-main)."
             gh pr create \
               --base main \
               --head dev \
-              --title "chore: sync dev → main" \
-              --body "Automated PR: \`dev\` → \`main\`
-
-> Auto-merge is enabled — will merge once all required checks pass (CI + enforce-dev-to-main).
-> This PR was created automatically on push to \`dev\`."
+              --title "chore: sync dev -> main" \
+              --body "$BODY"
 
             PR_NUMBER=$(gh pr list \
               --base main \

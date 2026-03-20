@@ -57,14 +57,12 @@ jobs:
           if [ -n "$PR_NUMBER" ]; then
             echo "PR #$PR_NUMBER already exists"
           else
+            BODY="Automated PR: ${HEAD} -> dev. Auto-merge enabled - squash-merges when all required checks pass. Edit the PR title to a conventional commit format if needed."
             gh pr create \
               --base dev \
               --head "$HEAD" \
               --title "$TITLE" \
-              --body "Automated PR: \`$HEAD\` → \`dev\`
-
-> Auto-merge is enabled — will squash-merge once all required checks pass.
-> Edit the PR title above to a valid conventional commit before checks complete if needed."
+              --body "$BODY"
 
             PR_NUMBER=$(gh pr list \
               --base dev \
