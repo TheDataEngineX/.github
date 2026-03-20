@@ -1,6 +1,6 @@
 # Workspace Config Optimization Implementation Plan
 
-> **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **STATUS: HISTORICAL** — Implemented March 2026. Release flow, version bump tasks, and tag formats here are superseded by release-please. See `/release.md` and `.github/CLAUDE.md` for current state. **For agentic workers:** Use superpowers:subagent-driven-development or superpowers:executing-plans to implement remaining steps.
 
 **Goal:** Optimize all DataEngineX workspace config files — fix broken deps, upgrade to Python 3.13, eliminate CI race conditions, consolidate Claude Code permissions, trim duplicate documentation, and consolidate agent definitions.
 

@@ -24,7 +24,7 @@ applyTo: "terraform/**,helm/**,ansible/**,Dockerfile,docker-compose*.yml,monitor
 ## Docker
 
 - Multi-stage builds: builder stage → minimal runtime stage
-- Base image: `python:3.12-slim`
+- Base image: `python:3.13-slim`
 - Non-root user: `RUN useradd -m dex && USER dex`
 - No secrets in `ENV` or `ARG`
 - `.dockerignore` must exclude `.venv`, `__pycache__`, `.git`, `.env`
