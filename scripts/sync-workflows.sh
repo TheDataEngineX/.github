@@ -53,6 +53,8 @@ for file in \
     .github/workflows/security.yml \
     .github/workflows/claude.yml \
     .github/workflows/release-please.yml \
+    .github/workflows/auto-pr-to-dev.yml \
+    .github/workflows/auto-pr-dev-to-main.yml \
     .github/PULL_REQUEST_TEMPLATE.md \
     release-please-config.json; do
   for repo in datadex agentdex careerdex dex-studio infradex; do
