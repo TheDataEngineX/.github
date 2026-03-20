@@ -1,62 +1,67 @@
 # Release
 
-Canonical release flow for dataenginex. Claude must show the staged diff and wait for
-explicit approval before executing any commit.
+Release is fully automated via **release-please**. Claude's role is to verify readiness and monitor the pipeline — never to create tags, bump versions manually, or trigger workflows directly.
+
+## How it works
+
+```text
+conventional commits merged to main
+  → release-please opens Release PR (bumps pyproject.toml + CHANGELOG + uv.lock)
+  → Developer reviews and merges PR
+  → release-please creates tag v{version} + GitHub Release automatically
+  → pypi-publish.yml publishes to PyPI  (dex only)
+  → release-dataenginex.yml attaches SBOM  (dex only)
+```
 
 ## Prerequisites
 
 - All tests passing: `uv run poe check-all`
-- On a `feature/*` or `fix/*` branch (not directly on `dev` or `main`)
+- Changes merged to `main` via `dev` (feature branch → dev → main)
+- Commits follow conventional commit format (`feat:`, `fix:`, `chore:`, etc.)
 
 ## Steps
 
-1. **Bump version** (choose one):
+1. **Verify pipeline triggered**
 
    ```bash
-   uv run poe version-patch   # bug fixes
-   uv run poe version-minor   # new features
-   uv run poe version-major   # breaking changes
+   gh run list --workflow=release-please.yml --limit 5
    ```
 
-1. **Stage the version bump files**
+1. **Check for open Release PR**
 
    ```bash
-   git add pyproject.toml uv.lock CHANGELOG.md
-   git diff --staged
+   gh pr list --label "autorelease: pending"
    ```
 
-1. **STOP — show diff and request explicit approval before committing.**
-   Do not proceed until the user approves the staged changes.
+1. **Review the Release PR**
 
-1. **Commit with author identity** (after approval only):
+   - Confirm version bump level matches commit types
+   - Confirm CHANGELOG entries are accurate
+   - Merge when satisfied
 
-   ```bash
-   git commit --author="jaymyaka <jayapal.myaka99@gmail.com>" \
-     -m "chore: bump version to $(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")"
-   ```
-
-1. **Push branch and open PR to `dev`**
-
-   ```bash
-   git push -u origin HEAD
-   gh pr create --base dev --title "chore: release vX.Y.Z" --body "Version bump"
-   ```
-
-1. **After dev PR merges — open PR `dev` → `main`**
-
-   ```bash
-   gh pr create --base main --head dev --title "release: vX.Y.Z" --body "Release vX.Y.Z"
-   ```
-
-1. **After main PR merges — create GitHub Release**
-
-   ```bash
-   VERSION=$(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
-   gh release create "dataenginex-v${VERSION}" --generate-notes --title "dataenginex v${VERSION}"
-   ```
-
-1. **Monitor PyPI publish**
+1. **Monitor post-merge pipeline** (dex only)
 
    ```bash
    gh run list --workflow=pypi-publish.yml --limit 5
+   gh run list --workflow=release-dataenginex.yml --limit 5
    ```
+
+1. **Verify release**
+
+   ```bash
+   VERSION=$(uv run poe version)
+   gh release view "v${VERSION}"
+   ```
+
+## Version bump reference
+
+| Commit type                                     | Bump  |
+| ----------------------------------------------- | ----- |
+| `feat:`                                         | minor |
+| `feat!:` / `BREAKING CHANGE:`                   | major |
+| `fix:`, `perf:`                                 | patch |
+| `chore:`, `refactor:`, `test:`, `ci:`, `docs:`  | none  |
+
+## Pre-commit hook
+
+The pre-commit hook (`uv run poe install-hooks`) auto-bumps patch version on every commit if you did not manually change `pyproject.toml`. This keeps the manifest in sync regardless of commit type.

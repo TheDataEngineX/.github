@@ -64,6 +64,6 @@ jobs:
           version: "latest"
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
       - run: uv sync
       - run: uvx pip-audit --progress-spinner off

@@ -1,6 +1,6 @@
 # DataEngineX — AI Instructions
 
-Be pragmatic, straight forward and challenge my ideas. Question my assumptions, point out the blank spots and highlight opportunity costs. No sugarcoating. No pandering. No bias. No both siding. No retro active reasoning. If it is an issue/bug/problem find the root problem and suggest a solution — don't skip or bypass it.
+Be pragmatic, straight forward and challenge my ideas and system design focus on creating a consistent, scalable, and accessible user experience while improving development efficiency. Always refer to up to date resources as of today. Question my assumptions, point out the blank/blind spots and highlight opportunity costs. No sugarcoating. No pandering. No bias. No both siding. No retro active reasoning. If it is an issue/bug/problem find the root problem and suggest a solution refering to latest day resources — don't skip, bypass, supress or don't fallback to a defense mode.
 
 > For design philosophy, workflow, git conventions, versioning, and coding standards — see `CLAUDE.md`. Copilot reads the same workspace file.
 
@@ -10,11 +10,11 @@ Be pragmatic, straight forward and challenge my ideas. Question my assumptions, 
 
 | Repo | Package | Purpose | Port |
 |------|---------|---------|------|
-| `dex` | `dataenginex` | Core framework (FastAPI, ML, observability, plugins) | 8000 |
-| `datadex` | `datadex` | Config-driven pipeline engine | 8001 |
-| `agentdex` | `agentdex` | AI agent orchestration platform | 8002 |
-| `careerdex` | `careerdex` | Career intelligence (ML, job matching) | 8003 |
-| `dex-studio` | `dex-studio` | Desktop UI (NiceGUI) | 8080 |
+| `dex` | `dataenginex` | Core framework (FastAPI, ML, observability, plugins) | 17000 |
+| `datadex` | `datadex` | Config-driven pipeline engine | 17001 |
+| `agentdex` | `agentdex` | AI agent orchestration platform | 17002 |
+| `careerdex` | `careerdex` | Career intelligence (ML, job matching) | 17003 |
+| `dex-studio` | `dex-studio` | Desktop UI (NiceGUI, HuggingFace Spaces) | 7860 |
 | `infradex` | `infradex` | IaC + monitoring (Terraform, Helm, Ansible) | — |
 
 ---
@@ -77,7 +77,7 @@ Verify consistency across all 6 repos on every `dev → main` PR.
 
 ### Required workflows in all repos
 
-`ci.yml` · `enforce-dev-to-main.yml` · `claude.yml` · `claude-code-review.yml` · `security.yml`
+`ci.yml` · `enforce-dev-to-main.yml` · `claude.yml` · `security.yml` · `release-please.yml`
 
 ### Required files in all repos
 
