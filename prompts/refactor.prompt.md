@@ -12,7 +12,7 @@ Refactor the code in ${file} to improve quality while preserving behavior.
 3. **Naming** — Replace vague names (`x`, `temp`, `data`) with descriptive ones
 4. **Error handling** — Replace bare `except:` with specific exceptions + context
 5. **Type safety** — Add missing type hints (params + return), add `from __future__ import annotations`
-6. **Logging** — Replace `print()` / stdlib `logging` with structlog (API) or loguru (ML/backend)
+6. **Logging** — Replace `print()` / stdlib `logging` / loguru with structlog
 7. **Duplication** — Extract shared logic into helpers in appropriate module
 
 ## Constraints

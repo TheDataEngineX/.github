@@ -19,9 +19,8 @@ applyTo: "src/**/*.py"
 
 ## Logging
 
-- API/middleware: `structlog.get_logger(__name__)` → `logger.info("event", key=value)`
-- ML/backend: `from loguru import logger` → `logger.info("message {}", value)`
-- Never: `print()`, `logging.getLogger()`, f-strings in log calls
+- All code: `structlog.get_logger()` → `logger.info("event", key=value)`
+- Never: `print()`, `loguru`, `logging.getLogger()`, f-strings in log calls
 - Never log PII, tokens, passwords, or raw request bodies
 
 ## Error handling

@@ -19,9 +19,6 @@ jobs:
       matrix:
         repo:
           - DEX
-          - datadex
-          - agentdex
-          - careerdex
           - dex-studio
           - infradex
     steps:

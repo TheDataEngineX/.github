@@ -24,7 +24,7 @@ env:
 
 jobs:
   # Primary lint + test job (required, runs on dev deps only)
-  # Covers: dataenginex core API, careerdex FastAPI, shared tests
+  # Covers: dataenginex core API, FastAPI endpoints, shared tests
   lint-and-test:
     name: Lint and Test
     runs-on: ubuntu-latest

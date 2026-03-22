@@ -25,7 +25,7 @@ Review priorities (in order):
 1. **Security** — No hardcoded secrets, parameterised queries only, no PII in logs
 1. **Correctness** — Specific exceptions, error context logged, type safety, no silent swallows
 1. **Testing** — Tests exist for new code, cover edge cases, 80%+ coverage on new code
-1. **Standards** — `from __future__ import annotations`, type hints, structlog/loguru (never `print()`)
+1. **Standards** — `from __future__ import annotations`, type hints, structlog only (never `print()`, never loguru)
 1. **API contracts** — versioned routes (`/api/v1/`), `response_model=` on every endpoint, no silent breaking changes to existing endpoints
 1. **Migrations** — DB migrations are reversible, include rollback, tested in isolation
 

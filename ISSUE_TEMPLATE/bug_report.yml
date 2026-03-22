@@ -10,9 +10,6 @@ body:
       options:
         - dataenginex
         - dex-studio
-        - datadex
-        - agentdex
-        - careerdex
         - infradex
     validations:
       required: true
