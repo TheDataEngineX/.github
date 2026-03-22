@@ -19,11 +19,12 @@ development → staging → production → archived
 
 ## Logging
 
-Use `loguru` for all ML code — not structlog:
+Use `structlog` for all ML code (standardized across entire codebase):
 
 ```python
-from loguru import logger
-logger.info("training complete epoch={} loss={:.4f}", epoch, loss)
+import structlog
+logger = structlog.get_logger()
+logger.info("training complete", epoch=epoch, loss=round(loss, 4))
 ```
 
 ## Training

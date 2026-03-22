@@ -123,9 +123,6 @@ read_version() {
 }
 
 VERSION_DEX=$(read_version "dex")
-VERSION_DATADEX=$(read_version "datadex")
-VERSION_AGENTDEX=$(read_version "agentdex")
-VERSION_CAREERDEX=$(read_version "careerdex")
 VERSION_DEX_STUDIO=$(read_version "dex-studio")
 VERSION_INFRADEX=$(read_version "infradex")
 
@@ -146,9 +143,6 @@ RECOMMENDED_LOCAL_LLM=$RECOMMENDED_LOCAL_LLM
 
 # ── Repo Versions ──────────────────────────────────────────────────────────
 VERSION_DEX=$VERSION_DEX
-VERSION_DATADEX=$VERSION_DATADEX
-VERSION_AGENTDEX=$VERSION_AGENTDEX
-VERSION_CAREERDEX=$VERSION_CAREERDEX
 VERSION_DEX_STUDIO=$VERSION_DEX_STUDIO
 VERSION_INFRADEX=$VERSION_INFRADEX
 

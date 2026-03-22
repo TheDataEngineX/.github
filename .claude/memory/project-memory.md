@@ -16,12 +16,11 @@ _Nothing yet._
 
 | Repo | Status | Last Known Action |
 |------|--------|------------------|
-| dex | — | — |
-| datadex | — | — |
-| agentdex | — | — |
-| careerdex | — | — |
+| dataenginex (dex) | — | — |
 | dex-studio | — | — |
 | infradex | — | — |
+
+> **Note:** datadex, agentdex, and careerdex consolidated into dataenginex monorepo.
 
 ## Blockers
 

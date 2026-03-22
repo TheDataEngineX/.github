@@ -32,7 +32,7 @@ Open source access to code does **not** automatically grant permission to use pr
 To reduce impersonation risk, treat these names as official upstream identifiers:
 
 - **PyPI package (official):** `dataenginex`
-- **GHCR image namespace (official):** `ghcr.io/thedataenginex/dex`
+- **GHCR image namespace (official):** `ghcr.io/thedataenginex/dataenginex`
 
 If you publish a fork, use distinct names that avoid confusion.
 

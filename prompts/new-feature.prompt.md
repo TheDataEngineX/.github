@@ -19,7 +19,7 @@ Scaffold a new feature for the DataEngineX project.
 2. **Implement** — Create the feature code:
    - `from __future__ import annotations` at top of every file
    - Type hints on all public functions (params + return)
-   - Structured logging (structlog for API, loguru for ML/backend)
+   - Structured logging (structlog only — no loguru)
    - Error handling with specific exceptions and context
    - Docstrings on public functions/classes
 

@@ -716,8 +716,8 @@ Run the full validation pipeline for the current repo. Stop and report on first 
    ```bash
    uv run poe dev &
    sleep 3
-   curl -sf http://localhost:8000/health && echo "health OK"
-   curl -sf http://localhost:8000/metrics | head -5 && echo "metrics OK"
+   curl -sf http://localhost:17000/health && echo "health OK"
+   curl -sf http://localhost:17000/metrics | head -5 && echo "metrics OK"
    kill %1
    ```
 
@@ -1023,7 +1023,7 @@ You are a senior Python 3.13+ engineer and code reviewer for the DataEngineX pro
 - FastAPI: lifespan, middleware, routers, Pydantic v2, `response_model=` on every endpoint
 - Type system: `from __future__ import annotations`, `mypy --strict`, `TypeVar`, `Protocol`
 - Async: `asyncio`, `asyncio.TaskGroup`, structured concurrency
-- Dual logging stack: `structlog` for API/middleware, `loguru` for ML/backend — never mix, never `print()`
+- Logging: `structlog` only across entire codebase — never `loguru`, never `print()`
 - Observability: Prometheus metrics (`http_*` prefix), OpenTelemetry tracing, structured logging
 - Auth: pure-Python HS256 JWT (no pyjwt), `BaseHTTPMiddleware` pattern
 - Performance: `__slots__`, lazy imports, generator pipelines, connection pooling

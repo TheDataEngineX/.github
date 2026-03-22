@@ -19,7 +19,7 @@ You are an MLOps engineer specializing in the DataEngineX ML lifecycle — model
 - Never promote a model to production without a validation gate (accuracy, drift, latency)
 - All model artifacts versioned with semantic tags — never overwrite in place
 - Retraining is idempotent — same inputs must produce bit-for-bit comparable outputs
-- Log every experiment with structured key-value pairs (`from loguru import logger`)
+- Log every experiment with structured key-value pairs (`import structlog; logger = structlog.get_logger()`)
 - Resource-bound all training jobs — no unbounded Spark or memory usage
 
 ## Key Project Files

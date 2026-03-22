@@ -34,9 +34,6 @@ body:
       label: Component
       options:
         - dataenginex (core)
-        - datadex (pipelines)
-        - agentdex (agents)
-        - careerdex (career)
         - dex-studio (UI)
         - infradex (infra)
         - docs / DX

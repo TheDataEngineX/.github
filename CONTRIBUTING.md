@@ -15,7 +15,7 @@ the org-wide contribution process. Individual repos may have additional guidelin
 
 1. Open a **Feature Request** issue
 2. Describe the problem it solves and the proposed solution
-3. Tag with the relevant product (dataenginex, careerdex, datadex, agentdex)
+3. Tag with the relevant component (api, data, ml, config, cli)
 
 ### Submitting Pull Requests
 
@@ -30,7 +30,7 @@ All repos use the same toolchain:
 
 ```bash
 # Prerequisites
-python >= 3.12
+python >= 3.12  # 3.13+ recommended
 uv  # Package manager (https://docs.astral.sh/uv/)
 
 # Clone and setup

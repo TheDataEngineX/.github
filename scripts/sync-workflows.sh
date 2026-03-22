@@ -47,7 +47,8 @@ check_file() {
 }
 
 # ── Group 1: shared across ALL service repos ──────────────────────────────────
-# dex is the canonical source; datadex agentdex careerdex dex-studio infradex receive
+# dex is the canonical source; dex-studio and infradex receive
+# Note: datadex, agentdex, careerdex consolidated into dataenginex monorepo
 for file in \
     .github/workflows/enforce-dev-to-main.yml \
     .github/workflows/security.yml \
@@ -57,18 +58,18 @@ for file in \
     .github/workflows/auto-pr-dev-to-main.yml \
     .github/PULL_REQUEST_TEMPLATE.md \
     release-please-config.json; do
-  for repo in datadex agentdex careerdex dex-studio infradex; do
+  for repo in dex-studio infradex; do
     check_file "$ROOT/dex/$file" "$ROOT/$repo/$file"
   done
 done
 
 # ── Group 2: most repos (infradex excluded — has extra terraform/helm entries) ─
-for repo in datadex agentdex careerdex dex-studio; do
+for repo in dex-studio; do
   check_file "$ROOT/dex/.github/dependabot.yml" "$ROOT/$repo/.github/dependabot.yml"
 done
 
 # ── Group 3: Claude Code settings — source of truth is .github/.claude/settings.json ─
-for repo in dex datadex agentdex careerdex dex-studio infradex; do
+for repo in dex dex-studio infradex; do
   check_file "$ROOT/.github/.claude/settings.json" "$ROOT/$repo/.claude/settings.json"
 done
 

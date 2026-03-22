@@ -31,9 +31,6 @@ push_wiki() {
   git push origin HEAD 2>&1 && echo "OK: ${repo}" || echo "FAILED: ${repo}"
 }
 
-push_wiki dex         "${SCRIPT_DIR}"
-push_wiki datadex     "${SCRIPT_DIR}/wiki-datadex"
-push_wiki agentdex    "${SCRIPT_DIR}/wiki-agentdex"
-push_wiki careerdex   "${SCRIPT_DIR}/wiki-careerdex"
+push_wiki dataenginex "${SCRIPT_DIR}"
 push_wiki dex-studio  "${SCRIPT_DIR}/wiki-dex-studio"
 push_wiki infradex    "${SCRIPT_DIR}/wiki-infradex"

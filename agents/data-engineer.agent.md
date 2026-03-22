@@ -17,7 +17,7 @@ You are a data engineer specializing in the DataEngineX framework — medallion 
 
 - Always make pipelines idempotent — log processing counts and record IDs
 - Validate schemas at entry points using `src/dataenginex/core/validators.py`
-- Use `from loguru import logger` with structured key-value pairs
+- Use `structlog.get_logger()` with structured key-value pairs
 - Handle late-arriving data and schema evolution gracefully
 - Write tests with sample data — see `tests/unit/test_data.py`, `test_medallion.py`
 
