@@ -2,11 +2,11 @@
 
 ## Prerequisites
 
-- Python 3.12+
+- Python 3.13+
 - [uv](https://docs.astral.sh/uv/) package manager
 
 ```bash
-git clone https://github.com/TheDataEngineX/dataenginex && cd dataenginex
+git clone https://github.com/TheDataEngineX/DEX && cd DEX
 uv run poe setup    # install deps + pre-commit hooks
 ```
 

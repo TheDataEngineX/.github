@@ -90,7 +90,7 @@ Provided utilities:
 
 | Layer | Technology |
 |-------|------------|
-| Language | Python 3.12+ |
+| Language | Python 3.13+ |
 | Package Manager | uv + Hatchling |
 | Web Framework | FastAPI + Uvicorn (optional `[api]`) |
 | Orchestration | Apache Airflow |

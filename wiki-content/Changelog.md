@@ -1,6 +1,6 @@
 # Changelog
 
-See [CHANGELOG.md](https://github.com/TheDataEngineX/dataenginex/blob/main/CHANGELOG.md) for the full history.
+See [CHANGELOG.md](https://github.com/TheDataEngineX/DEX/blob/main/CHANGELOG.md) for the full history.
 
 ## Latest: v0.6.1 — 2026-03-15
 
@@ -47,4 +47,4 @@ See [CHANGELOG.md](https://github.com/TheDataEngineX/dataenginex/blob/main/CHANG
 
 ---
 
-For earlier versions, see the [full CHANGELOG](https://github.com/TheDataEngineX/dataenginex/blob/main/CHANGELOG.md).
+For earlier versions, see the [full CHANGELOG](https://github.com/TheDataEngineX/DEX/blob/main/CHANGELOG.md).

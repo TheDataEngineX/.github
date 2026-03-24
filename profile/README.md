@@ -2,10 +2,10 @@
 
 Unified Data + ML + AI framework — config-driven, self-hosted, production-ready
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/TheDataEngineX/dataenginex/blob/main/LICENSE)
-[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/TheDataEngineX/DEX/blob/main/LICENSE)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI](https://img.shields.io/pypi/v/dataenginex?label=dataenginex)](https://pypi.org/project/dataenginex/)
-[![Docs](https://img.shields.io/badge/docs-dataenginex.org-informational)](https://docs.dataenginex.org)
+[![Docs](https://img.shields.io/badge/docs-thedataenginex.org-informational)](https://docs.thedataenginex.org)
 [![Discussions](https://img.shields.io/github/discussions/TheDataEngineX/.github?label=discussions)](https://github.com/orgs/TheDataEngineX/discussions)
 
 ---
@@ -62,7 +62,7 @@ graph LR
 
 | Repo | What it does | Status |
 | --- | --- | --- |
-| [**dataenginex**](https://github.com/TheDataEngineX/dataenginex) | Core framework: config system, backend registry, CLI, API, ML, AI agents | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
+| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config system, backend registry, CLI, API, ML, AI agents | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
 | [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | Web UI: single pane of glass for projects, pipelines, ML, agents (NiceGUI) | Alpha |
 | [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC + monitoring: Terraform, Helm, K3s, Prometheus, Grafana | Alpha |
 
@@ -79,7 +79,7 @@ dex serve                    # → http://localhost:17000
 
 ```bash
 # From source
-git clone https://github.com/TheDataEngineX/dataenginex && cd dataenginex
+git clone https://github.com/TheDataEngineX/DEX && cd DEX
 uv sync && uv run poe dev   # → http://localhost:17000
 ```
 
@@ -121,4 +121,4 @@ pip install dataenginex[all]         # Everything
 
 ---
 
-**MIT License** · **Python 3.12+** · **Self-hosted** · **Production-grade**
+**MIT License** · **Python 3.13+** · **Self-hosted** · **Production-grade**

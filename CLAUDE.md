@@ -1,8 +1,8 @@
-# CLAUDE.md — DataEngineX Workspace
+# CLAUDE.md — DEX Workspace
 
 Always Be pragmatic, straight forward and challenge my ideas and system design focus on creating a consistent, scalable, and accessible user experience while improving development efficiency. Always refer to up to date resources as of today. Question my assumptions, point out the blank/blind spots and highlight opportunity costs. No sugarcoating. No pandering. No bias. No both siding. No retro active reasoning. If there is something wrong or will not work let me know even if I don't ask it specifically. If it is an issue/bug/problem find the root problem and suggest a solution refering to latest day resources — don't skip, bypass, supress or don't fallback to a defense mode.
 
-Workspace-wide rules for all repos: **dataenginex · dex-studio · infradex**
+Workspace-wide rules for all repos: **DEX · dex-studio · infradex**
 
 Repo-specific context is in each repo's own `CLAUDE.md`.
 
@@ -50,7 +50,7 @@ conventional commits → push to main
   → merge PR
   → release-please creates tag v{version} + GitHub Release
   → pypi-publish.yml publishes to PyPI  (dex only)
-  → release-dataenginex.yml attaches SBOM  (dex only)
+  → release-dex.yml attaches SBOM  (dex only)
 ```
 
 **Version is managed automatically.** Never manually run version bump commands.
@@ -68,7 +68,7 @@ See `.github/instructions/` for per-domain checklists applied during `/review`.
 - No `print()` — use `structlog` (standardized across all repos, no loguru)
 - No hardcoded secrets — use env vars or Vault
 - Tests required for all new code — 80%+ coverage on new paths
-- DRY enforced — no copy-paste across repos; extract to shared base or `poe_tasks_base.toml`
+- DRY enforced — no copy-paste across repos; extract to shared base
 
 ______________________________________________________________________
 
@@ -76,7 +76,7 @@ ______________________________________________________________________
 
 | Tool | Config source |
 |------|--------------|
-| poethepoet tasks | `.github/poe_tasks_base.toml` (included by all repos) |
+| poethepoet tasks | Each repo owns `poe_tasks.toml` — standard task names: `lint`, `test`, `check-all`, `dev`, `version`, `clean` |
 | Git hooks | `.github/scripts/pre-commit-version-bump.sh` (install: `uv run poe install-hooks`) |
 | Workflow sync | `.github/scripts/sync-workflows.sh` (dry-run) / `--apply` |
 | Reusable workflows | `.github/.github/workflows/` (security, claude, enforce-dev-to-main, release-please) |

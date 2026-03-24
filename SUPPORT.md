@@ -4,7 +4,7 @@ Need help with DataEngineX? Here's where to find it.
 
 ## Documentation
 
-- [DataEngineX Docs](https://docs.dataenginex.org) — Core framework
+- [DEX Docs](https://docs.thedataenginex.org) — Core framework
 - [DEX Studio Docs](https://github.com/TheDataEngineX/dex-studio) — Web UI
 - [InfraDEX Docs](https://github.com/TheDataEngineX/infradex) — Infrastructure
 
@@ -21,7 +21,7 @@ For bugs and feature requests, use the issue tracker in the relevant repo:
 
 | Repo | Issues |
 |------|--------|
-| dataenginex | [Issues](https://github.com/TheDataEngineX/dataenginex/issues) |
+| DEX | [Issues](https://github.com/TheDataEngineX/DEX/issues) |
 | dex-studio | [Issues](https://github.com/TheDataEngineX/dex-studio/issues) |
 | infradex | [Issues](https://github.com/TheDataEngineX/infradex/issues) |
 
