@@ -1,22 +1,21 @@
 # TheDataEngineX
 
-AI-ready data infrastructure — from notebook to production
+Unified Data + ML + AI framework — config-driven, self-hosted, production-ready
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/TheDataEngineX/DEX/blob/main/LICENSE)
-[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI](https://img.shields.io/pypi/v/dataenginex?label=dataenginex)](https://pypi.org/project/dataenginex/)
 [![Docs](https://img.shields.io/badge/docs-thedataenginex.org-informational)](https://docs.thedataenginex.org)
 [![Discussions](https://img.shields.io/github/discussions/TheDataEngineX/.github?label=discussions)](https://github.com/orgs/TheDataEngineX/discussions)
 
 ---
 
-We build a self-hosted, production-grade platform for data engineering and AI.
-One framework, six components — goes from raw data to trained models to deployed agents,
-with observability built in at every layer.
+One `dex.yaml` defines your entire pipeline — from data ingestion through ML training to AI agents.
+Opinionated defaults that work out of the box, swap any layer for industry tools via extras.
 
 > **Self-hosted.** Your data never leaves your infrastructure.
-> **Composable.** Use only what you need — each component works standalone.
-> **Production-grade.** Medallion pipelines, ML drift detection, structured logging, Prometheus metrics, OpenTelemetry tracing out of the box.
+> **Config-driven.** One YAML file defines everything.
+> **Production-grade.** DuckDB, FastAPI, structlog, Prometheus metrics out of the box.
 
 ---
 
@@ -24,139 +23,88 @@ with observability built in at every layer.
 
 ```mermaid
 graph LR
-    subgraph Sources
-        S1[(Databases)]
-        S2[(APIs)]
-        S3[(Files / S3)]
-    end
-
-    subgraph Core ["dataenginex — core framework"]
+    subgraph Config ["dex.yaml"]
         direction TB
-        MW[Middleware\nauth · rate limit · tracing]
-        QG[Quality Gates\nbronze → silver → gold]
-        ML[ML Registry\ntraining · drift · serving]
-        OB[Observability\nPrometheus · OTEL · structlog]
+        DC[data:\nsources, pipelines, quality]
+        MC[ml:\ntracking, training, serving]
+        AC[ai:\nLLM, retrieval, agents]
     end
 
-    subgraph Apps
-        DD[DataDEX\npipeline engine]
-        AD[AgentDEX\nAI agents]
-        CD[CareerDEX\ncareer intel]
-        UI[DEX Studio\ndesktop UI]
+    subgraph Core ["dataenginex"]
+        direction TB
+        REG[Backend Registry\nBase* ABCs + swappable backends]
+        API[FastAPI\nauth · rate limit · metrics]
+        OB[Observability\nstructlog · Prometheus · OTEL]
     end
 
-    subgraph Infra ["infradex — K3s / EKS"]
-        TF[Terraform]
-        HE[Helm]
-        AN[Ansible]
-        MON[Prometheus\nGrafana\nJaeger]
+    subgraph Extras ["pip install dataenginex\[extra\]"]
+        DAG[dagster]
+        MLF[mlflow]
+        LG[langgraph]
+        QD[qdrant]
     end
 
-    S1 & S2 & S3 --> DD --> Core
-    AD --> Core
-    CD --> Core
+    Config --> Core
+    Extras -->|same interface| Core
+
+    subgraph Deploy
+        UI[DEX Studio\nweb UI]
+        INF[InfraDEX\nK3s · Helm · Terraform]
+    end
+
     UI -->|HTTP| Core
-    Infra -->|deploys| Core
-    Infra -->|deploys| Apps
+    INF -->|deploys| Core
 ```
 
 ---
 
-## Components
+## Repositories
 
-| Repo | What it does | Status | CI |
-| --- | --- | --- | --- |
-| [**DEX**](https://github.com/TheDataEngineX/DEX) — `dataenginex` | Core framework: medallion pipelines, ML registry, auth, observability, plugin system | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) | [![CI](https://github.com/TheDataEngineX/DEX/actions/workflows/ci.yml/badge.svg)](https://github.com/TheDataEngineX/DEX/actions/workflows/ci.yml) |
-| [**DataDEX**](https://github.com/TheDataEngineX/datadex) — `datadex` | YAML-defined pipelines: ingest → transform → quality → lineage | Alpha | [![CI](https://github.com/TheDataEngineX/datadex/actions/workflows/ci.yml/badge.svg)](https://github.com/TheDataEngineX/datadex/actions/workflows/ci.yml) |
-| [**AgentDEX**](https://github.com/TheDataEngineX/agentdex) — `agentdex` | AI agent runtime: persistent memory, tool registry, multi-model routing, audit trails | Alpha | [![CI](https://github.com/TheDataEngineX/agentdex/actions/workflows/ci.yml/badge.svg)](https://github.com/TheDataEngineX/agentdex/actions/workflows/ci.yml) |
-| [**CareerDEX**](https://github.com/TheDataEngineX/careerdex) — `careerdex` | Career intelligence: job matching, salary prediction, skill gap analysis | In development | [![CI](https://github.com/TheDataEngineX/careerdex/actions/workflows/ci.yml/badge.svg)](https://github.com/TheDataEngineX/careerdex/actions/workflows/ci.yml) |
-| [**DEX Studio**](https://github.com/TheDataEngineX/dex-studio) — `dex-studio` | Cross-platform desktop UI: unified control plane for the full stack | v0.1.0 Alpha | [![CI](https://github.com/TheDataEngineX/dex-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/TheDataEngineX/dex-studio/actions/workflows/ci.yml) |
-| [**InfraDEX**](https://github.com/TheDataEngineX/infradex) — `infradex` | IaC + monitoring: Terraform, Helm, Ansible, Prometheus, Grafana, Jaeger | Alpha | [![CI](https://github.com/TheDataEngineX/infradex/actions/workflows/ci.yml/badge.svg)](https://github.com/TheDataEngineX/infradex/actions/workflows/ci.yml) |
+| Repo | What it does | Status |
+| --- | --- | --- |
+| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config system, backend registry, CLI, API, ML, AI agents | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
+| [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | Web UI: single pane of glass for projects, pipelines, ML, agents (NiceGUI) | Alpha |
+| [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC + monitoring: Terraform, Helm, K3s, Prometheus, Grafana | Alpha |
 
 ---
 
 ## Quick Start
 
-**Install the core package:**
-
 ```bash
-uv add dataenginex           # core (FastAPI server included)
+pip install dataenginex
+dex init my-project --template full-stack
+dex validate dex.yaml
+dex serve                    # → http://localhost:17000
 ```
 
-**Run from source:**
-
 ```bash
+# From source
 git clone https://github.com/TheDataEngineX/DEX && cd DEX
-uv run poe setup
-uv run poe dev               # → http://localhost:8000
+uv sync && uv run poe dev   # → http://localhost:17000
 ```
 
-**Try the examples:**
+**Optional extras:**
 
 ```bash
-curl http://localhost:8000/health
-curl http://localhost:8000/metrics
-
-ls examples/
-# 01_medallion_pipeline.py  04_ml_training.py  07_plugin_system.py
-# 02_api_quickstart.py      05_data_catalog.py  08_spark_ml.py
-# 03_auth_jwt.py            06_observability.py  ...
-```
-
-**Full observability stack (requires infradex):**
-
-```bash
-git clone https://github.com/TheDataEngineX/infradex && cd infradex
-docker compose -f docker-compose.monitoring.yml up -d
-# Grafana    → http://localhost:3000  (admin / admin)
-# Prometheus → http://localhost:9090
-# Jaeger     → http://localhost:16686
+pip install dataenginex[dagster]     # Dagster orchestration
+pip install dataenginex[mlflow]      # MLflow tracking
+pip install dataenginex[agents]      # LangGraph agent runtime
+pip install dataenginex[vectors]     # Qdrant + LanceDB
+pip install dataenginex[embeddings]  # sentence-transformers + ONNX
+pip install dataenginex[all]         # Everything
 ```
 
 ---
 
-## Roadmap
+## Why DataEngineX
 
-What's shipping next across the platform:
-
-### Now — Core Completion
-
-- MLflow integration — replace custom JSON model registry with MLflow tracking + lifecycle stages
-- DataSecops module — PII detection, field masking, structured audit logs
-- PySpark + Databricks connectors for `datadex` pipeline engine
-- Cloud storage backends (S3, GCS, BigQuery) in `dex` lakehouse
-- Complete DB connectors (Postgres, Kafka, MySQL) in `datadex`
-
-### Next — Load Testing + Observability
-
-- Locust load tests across all API services
-- Grafana dashboard per component wired to the infradex monitoring stack
-- Full Terraform + Ansible + ArgoCD deploy verified end-to-end
-
-### Then — Demo Projects
-
-- Language-Learning Agent (`agentdex`) — memory, planning, tool use, multi-model routing
-- Book Recommender — Open Library → embeddings → Qdrant → recommendations
-- Movie Recommender — MovieLens → collaborative filtering + content-based fallback
-
-### Later — Infrastructure & Distribution
-
-- Docker images published to GHCR (`ghcr.io/thedataenginex/*`)
-- Docs site live at [thedataenginex.org](https://thedataenginex.org) via Netlify
-- Public CareerDEX demo — semantic job search powered by the platform
-
----
-
-## Why DEX
-
-| | DEX | DIY stack |
+| | DataEngineX | DIY stack |
 | --- | --- | --- |
-| **Medallion pipelines** | Built-in Bronze/Silver/Gold with quality gates | Wire together dbt + Airflow + custom validators |
-| **ML lifecycle** | Registry, drift detection (PSI), staging → prod promotion | MLflow + custom scripts |
-| **Observability** | Prometheus metrics, OTEL tracing, structlog — zero config | Manually instrument every service |
-| **AI agents** | Persistent memory, tool registry, cost tracking, audit log | LangChain boilerplate per project |
-| **Deployment** | One Helm chart per service, ArgoCD GitOps, Terraform modules | Write your own IaC from scratch |
-| **Plugin system** | Drop-in extensions via entry points | Fork and modify the framework |
+| **Config** | One `dex.yaml` for data + ML + AI | Separate configs per tool |
+| **Install** | `pip install dataenginex` | 10+ packages to wire together |
+| **Backends** | Swap via extras, same interface | Rewrite integration code |
+| **Self-hosted** | Works on laptop, VPS, or K8s | Cloud lock-in or complex setup |
+| **Observability** | structlog + Prometheus + OTEL built-in | Manual instrumentation |
 
 ---
 
@@ -164,13 +112,13 @@ What's shipping next across the platform:
 
 | | |
 | --- | --- |
-| 📖 **Documentation** | [docs.thedataenginex.org](https://docs.thedataenginex.org) |
-| 💬 **Discussions** | [github.com/orgs/TheDataEngineX/discussions](https://github.com/orgs/TheDataEngineX/discussions) |
-| 🐛 **Bug reports** | Open an issue in the relevant repo |
-| 🤝 **Contributing** | [CONTRIBUTING.md](https://github.com/TheDataEngineX/.github/blob/main/CONTRIBUTING.md) |
-| 🔒 **Security** | [SECURITY.md](https://github.com/TheDataEngineX/.github/blob/main/SECURITY.md) |
-| 🌐 **Website** | [thedataenginex.org](https://thedataenginex.org) |
+| **Documentation** | [docs.dataenginex.org](https://docs.dataenginex.org) |
+| **Discussions** | [github.com/orgs/TheDataEngineX/discussions](https://github.com/orgs/TheDataEngineX/discussions) |
+| **Bug reports** | Open an issue in the relevant repo |
+| **Contributing** | [CONTRIBUTING.md](https://github.com/TheDataEngineX/.github/blob/main/CONTRIBUTING.md) |
+| **Security** | [SECURITY.md](https://github.com/TheDataEngineX/.github/blob/main/SECURITY.md) |
+| **Website** | [dataenginex.org](https://dataenginex.org) |
 
 ---
 
-**MIT License** · **Python 3.12+** · **Self-hosted** · **Production-grade**
+**MIT License** · **Python 3.13+** · **Self-hosted** · **Production-grade**

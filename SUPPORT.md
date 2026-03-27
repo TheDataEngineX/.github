@@ -1,14 +1,12 @@
 # Support
 
-Need help with TheDataEngineX? Here's where to find it.
+Need help with DataEngineX? Here's where to find it.
 
 ## Documentation
 
-- [DataEngineX Docs](https://thedataenginex.github.io/dataenginex/) — Core framework
-- [CareerDEX Docs](https://thedataenginex.github.io/careerdex/) — Career intelligence
-- [DataDEX Docs](https://thedataenginex.github.io/datadex/) — Pipeline engine
-- [AgentDEX Docs](https://thedataenginex.github.io/agentdex/) — AI agents
-- [InfraDEX Docs](https://thedataenginex.github.io/infradex/) — Infrastructure
+- [DEX Docs](https://docs.thedataenginex.org) — Core framework
+- [DEX Studio Docs](https://github.com/TheDataEngineX/dex-studio) — Web UI
+- [InfraDEX Docs](https://github.com/TheDataEngineX/infradex) — Infrastructure
 
 ## Getting Help
 
@@ -23,12 +21,9 @@ For bugs and feature requests, use the issue tracker in the relevant repo:
 
 | Repo | Issues |
 |------|--------|
-| dataenginex | [Issues](https://github.com/TheDataEngineX/dataenginex/issues) |
-| careerdex | [Issues](https://github.com/TheDataEngineX/careerdex/issues) |
-| datadex | [Issues](https://github.com/TheDataEngineX/datadex/issues) |
-| agentdex | [Issues](https://github.com/TheDataEngineX/agentdex/issues) |
-| infradex | [Issues](https://github.com/TheDataEngineX/infradex/issues) |
+| DEX | [Issues](https://github.com/TheDataEngineX/DEX/issues) |
 | dex-studio | [Issues](https://github.com/TheDataEngineX/dex-studio/issues) |
+| infradex | [Issues](https://github.com/TheDataEngineX/infradex/issues) |
 
 ## What NOT to Use Issues For
 

@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       image-name:
-        description: "Docker image name (e.g. careerdex)"
+        description: "Docker image name (e.g. dataenginex)"
         required: true
         type: string
       dockerfile:

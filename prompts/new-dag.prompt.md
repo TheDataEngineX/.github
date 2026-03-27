@@ -20,7 +20,7 @@ Create a new Airflow DAG using the DataEngineX medallion architecture pattern.
    - Validate schemas at entry point using project validators
    - Reference `src/dataenginex/core/validators.py` for patterns
 4. **Logging**:
-   - Use `from loguru import logger` (not structlog in data pipelines)
+   - Use `import structlog; logger = structlog.get_logger()`
    - Log with structured key-value pairs: `logger.info("processed records", count=n)`
 5. **Error handling**:
    - Catch specific exceptions, log context, re-raise

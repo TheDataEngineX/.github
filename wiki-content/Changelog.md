@@ -1,6 +1,6 @@
 # Changelog
 
-See [CHANGELOG.md](https://github.com/TheDataEngineX/dex/blob/main/CHANGELOG.md) for the full history.
+See [CHANGELOG.md](https://github.com/TheDataEngineX/DEX/blob/main/CHANGELOG.md) for the full history.
 
 ## Latest: v0.6.1 — 2026-03-15
 
@@ -17,10 +17,10 @@ See [CHANGELOG.md](https://github.com/TheDataEngineX/dex/blob/main/CHANGELOG.md)
 
 ### Breaking Changes
 
-- **Routers removed** — `api/routers/v1.py` and `api/routers/ml.py` moved to application packages (e.g. `careerdex.api.routers`). `dataenginex` no longer ships any route definitions — it provides only reusable API utilities (auth, health, errors, pagination, rate limiting).
-- **FastAPI is now optional** — Core install (`pip install dataenginex`) includes only lightweight deps: `pydantic`, `pyyaml`, `loguru`, `httpx`, `python-dotenv`, `prometheus-client`. API/middleware consumers must install `pip install dataenginex[api]`.
+- **Routers removed** — `api/routers/v1.py` and `api/routers/ml.py` consolidated into the dataenginex monorepo. `dataenginex` provides reusable API utilities (auth, health, errors, pagination, rate limiting).
+- **FastAPI is now optional** — Core install (`pip install dataenginex`) includes only lightweight deps: `pydantic`, `pyyaml`, `structlog`, `httpx`, `python-dotenv`, `prometheus-client`. API/middleware consumers must install `pip install dataenginex[api]`.
 - **Root `__init__.py` slimmed** — `from dataenginex import ...` no longer re-exports `HealthChecker`, `HealthStatus`, `configure_logging`, `configure_tracing`, `get_logger`. Use `from dataenginex.api import ...` or `from dataenginex.middleware import ...` directly.
-- **Domain extraction** — Removed all CareerDEX-specific schemas and validators from the framework. Domain models belong in application packages, not the core library.
+- **Domain consolidation** — All domain schemas and validators consolidated into the dataenginex monorepo. Domain models live alongside the core library.
 
 ### Added
 
@@ -47,4 +47,4 @@ See [CHANGELOG.md](https://github.com/TheDataEngineX/dex/blob/main/CHANGELOG.md)
 
 ---
 
-For earlier versions, see the [full CHANGELOG](https://github.com/TheDataEngineX/dex/blob/main/CHANGELOG.md).
+For earlier versions, see the [full CHANGELOG](https://github.com/TheDataEngineX/DEX/blob/main/CHANGELOG.md).

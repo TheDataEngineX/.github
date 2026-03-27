@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Python 3.12+
+- Python 3.13+
 - [uv](https://docs.astral.sh/uv/) package manager
 
 ```bash
@@ -44,7 +44,7 @@ docker compose -f docker-compose.test.yml down
 
 | Command | Description |
 |---------|-------------|
-| `uv run poe dev` | Dev server (uvicorn reload, port 8000) |
+| `uv run poe dev` | Dev server (uvicorn reload, port 17000) |
 | `uv run poe docker-up` | Docker Compose up |
 | `uv run poe docker-down` | Docker Compose down |
 
@@ -75,9 +75,9 @@ uv run poe test
 # 4. Real server smoke test
 uv run python examples/02_api_quickstart.py
 # Then verify endpoints:
-# curl http://localhost:8000/health
-# curl http://localhost:8000/
-# curl http://localhost:8000/metrics
+# curl http://localhost:17000/health
+# curl http://localhost:17000/
+# curl http://localhost:17000/metrics
 
 # 5. Standalone import check
 python -c "from dataenginex.core import MedallionArchitecture, QualityGate"
@@ -106,9 +106,8 @@ Tests passing does not equal the app working. Step 4 is non-negotiable.
 
 ### Logging
 
-- **API/middleware**: `structlog.get_logger(__name__)` with `logger.info("event", key=value)`
-- **ML/backend**: `from loguru import logger` with `logger.info("message %s", arg)`
-- Never use `print()`, stdlib `logging`, or f-strings in log calls
+- **All code**: `import structlog; logger = structlog.get_logger()` with `logger.info("event", key=value)`
+- Never use `print()`, `loguru`, stdlib `logging`, or f-strings in log calls
 
 ## Git Conventions
 

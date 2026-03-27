@@ -1,8 +1,8 @@
-# CLAUDE.md — DataEngineX Workspace
+# CLAUDE.md — DEX Workspace
 
 Always Be pragmatic, straight forward and challenge my ideas and system design focus on creating a consistent, scalable, and accessible user experience while improving development efficiency. Always refer to up to date resources as of today. Question my assumptions, point out the blank/blind spots and highlight opportunity costs. No sugarcoating. No pandering. No bias. No both siding. No retro active reasoning. If there is something wrong or will not work let me know even if I don't ask it specifically. If it is an issue/bug/problem find the root problem and suggest a solution refering to latest day resources — don't skip, bypass, supress or don't fallback to a defense mode.
 
-Workspace-wide rules for all 6 repos: **dex · datadex · agentdex · careerdex · dex-studio · infradex**
+Workspace-wide rules for all repos: **DEX · dex-studio · infradex**
 
 Repo-specific context is in each repo's own `CLAUDE.md`.
 
@@ -12,12 +12,11 @@ ______________________________________________________________________
 
 | Repo | Package | Port | Purpose |
 |------|---------|------|---------|
-| `dex` | `dataenginex` | 17000 | Core framework — upstream of all service repos |
-| `datadex` | `datadex` | 17001 | Config-driven data pipeline engine |
-| `agentdex` | `agentdex` | 17002 | LLM agent framework |
-| `careerdex` | `careerdex` | 17003 | Career intelligence service |
-| `dex-studio` | `dex-studio` | 7860 | NiceGUI dashboard (HuggingFace Spaces) |
+| `dataenginex` (dex) | `dataenginex` | 17000 | Core framework — config, registry, CLI, API, ML, AI |
+| `dex-studio` | `dex-studio` | 7860 | Web UI — single pane of glass (NiceGUI) |
 | `infradex` | — | — | K3s / Helm / Terraform infrastructure |
+
+> **Note:** datadex, agentdex, and careerdex have been consolidated into the `dataenginex` monorepo (data, agents, and templates modules).
 
 ______________________________________________________________________
 
@@ -25,7 +24,7 @@ ______________________________________________________________________
 
 - **Branch naming:** `feature/<desc>` or `fix/<desc>` — never commit directly to `dev` or `main`
 - **Flow:** feature branch → PR to `dev` → PR `dev` to `main`
-- **dex first:** When changes span repos, commit dex before service repos — it is upstream
+- **dataenginex first:** When changes span repos, commit dataenginex before dex-studio/infradex — it is upstream
 - **Author:** `git commit --author="jaymyaka <jayapal.myaka99@gmail.com>"` on every commit
 - **No Co-Authored-By** trailer in commit messages
 
@@ -51,7 +50,7 @@ conventional commits → push to main
   → merge PR
   → release-please creates tag v{version} + GitHub Release
   → pypi-publish.yml publishes to PyPI  (dex only)
-  → release-dataenginex.yml attaches SBOM  (dex only)
+  → release-dex.yml attaches SBOM  (dex only)
 ```
 
 **Version is managed automatically.** Never manually run version bump commands.
@@ -66,10 +65,10 @@ See `.github/instructions/` for per-domain checklists applied during `/review`.
 **Universal rules (all repos, all files):**
 - `from __future__ import annotations` — first import in every source file
 - Type hints on all public functions — `mypy --strict` must pass
-- No `print()` — use `structlog` or `loguru`
+- No `print()` — use `structlog` (standardized across all repos, no loguru)
 - No hardcoded secrets — use env vars or Vault
 - Tests required for all new code — 80%+ coverage on new paths
-- DRY enforced — no copy-paste across repos; extract to shared base or `poe_tasks_base.toml`
+- DRY enforced — no copy-paste across repos; extract to shared base
 
 ______________________________________________________________________
 
@@ -77,7 +76,7 @@ ______________________________________________________________________
 
 | Tool | Config source |
 |------|--------------|
-| poethepoet tasks | `.github/poe_tasks_base.toml` (included by all repos) |
+| poethepoet tasks | Each repo owns `poe_tasks.toml` — standard task names: `lint`, `test`, `check-all`, `dev`, `version`, `clean` |
 | Git hooks | `.github/scripts/pre-commit-version-bump.sh` (install: `uv run poe install-hooks`) |
 | Workflow sync | `.github/scripts/sync-workflows.sh` (dry-run) / `--apply` |
 | Reusable workflows | `.github/.github/workflows/` (security, claude, enforce-dev-to-main, release-please) |

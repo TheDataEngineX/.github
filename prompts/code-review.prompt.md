@@ -17,7 +17,7 @@ Reference `.github/CHECKLISTS.md` and `.github/copilot-instructions.md` for full
 - [ ] `from __future__ import annotations` present
 - [ ] Functions under 50 lines, max 4 parameters
 - [ ] Tests exist for new functionality
-- [ ] No `print()` or stdlib `logging` — use loguru/structlog
+- [ ] No `print()` or stdlib `logging` — use structlog only
 
 ### API-specific (if applicable):
 - [ ] `response_model=` declared on endpoints

@@ -10,12 +10,11 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 | Repo | Package | Purpose | Port |
 |------|---------|---------|------|
-| `dex` | `dataenginex` | Core framework (FastAPI, ML, observability, plugins) | 17000 |
-| `datadex` | `datadex` | Config-driven pipeline engine | 17001 |
-| `agentdex` | `agentdex` | AI agent orchestration platform | 17002 |
-| `careerdex` | `careerdex` | Career intelligence (ML, job matching) | 17003 |
-| `dex-studio` | `dex-studio` | Desktop UI (NiceGUI, HuggingFace Spaces) | 7860 |
-| `infradex` | `infradex` | IaC + monitoring (Terraform, Helm, Ansible) | — |
+| `dataenginex` (dex) | `dataenginex` | Core framework — config, registry, CLI, API, ML, AI | 17000 |
+| `dex-studio` | `dex-studio` | Web UI — single pane of glass (NiceGUI) | 7860 |
+| `infradex` | — | IaC + monitoring (Terraform, Helm, K3s) | — |
+
+> datadex, agentdex, and careerdex consolidated into `dataenginex` as submodules.
 
 ---
 
@@ -23,7 +22,7 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 - `from __future__ import annotations` in ALL source files
 - Max 4 parameters per function — use dataclasses or Pydantic for more
-- **Logging:** `structlog` for API/middleware, `loguru` for ML/backend — never `print()`
+- **Logging:** `structlog` only — never `print()`, never `loguru`
 - **Errors:** Catch specific exceptions, log with full context, re-raise — never swallow
 - **Stubs:** `raise NotImplementedError("descriptive")` — never return fake data
 - **Secrets:** Never hardcode — parameterized queries only, never log PII
@@ -73,7 +72,7 @@ Always use Context7 MCP for library/API docs (FastAPI, PySpark, Pydantic, Airflo
 
 ## Cross-Repo Sync Policy
 
-Verify consistency across all 6 repos on every `dev → main` PR.
+Verify consistency across all 3 repos on every `dev → main` PR.
 
 ### Required workflows in all repos
 

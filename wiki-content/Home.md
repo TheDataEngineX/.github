@@ -1,10 +1,10 @@
-# DataEngineX (DEX)
+# DEX
 
 > Core framework for data engineering, ML, and observability.
 
 [![CI](https://github.com/TheDataEngineX/DEX/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/TheDataEngineX/DEX/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/)
-[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Coverage](https://img.shields.io/badge/coverage-94%25-brightgreen)](https://github.com/TheDataEngineX/DEX)
 
@@ -37,7 +37,7 @@ pip install dataenginex[all]
 # Clone and develop
 git clone https://github.com/TheDataEngineX/DEX && cd DEX
 uv run poe setup    # install deps + pre-commit hooks
-uv run poe dev      # dev server → http://localhost:8000
+uv run poe dev      # dev server → http://localhost:17000
 uv run poe test     # run tests
 ```
 
@@ -94,20 +94,17 @@ for plugin in plugins:
 status = registry.health_check_all()
 ```
 
-Official plugins: [datadex](https://github.com/TheDataEngineX/datadex) · [agentdex](https://github.com/TheDataEngineX/agentdex) · [careerdex](https://github.com/TheDataEngineX/careerdex)
-
 ## Workspace
 
 Part of the [DataEngineX](https://github.com/TheDataEngineX) ecosystem:
 
 | Repo | Purpose | Port |
 |------|---------|------|
-| [dex](https://github.com/TheDataEngineX/dex) | Core framework | 8000 |
-| [datadex](https://github.com/TheDataEngineX/datadex) | Pipeline engine | 8001 |
-| [agentdex](https://github.com/TheDataEngineX/agentdex) | AI agents | 8002 |
-| [careerdex](https://github.com/TheDataEngineX/careerdex) | Career intelligence | 8003 |
-| [dex-studio](https://github.com/TheDataEngineX/dex-studio) | Desktop UI | 8080 |
+| [DEX](https://github.com/TheDataEngineX/DEX) | Core framework (data + ML + AI) | 17000 |
+| [dex-studio](https://github.com/TheDataEngineX/dex-studio) | Desktop UI | 7860 |
 | [infradex](https://github.com/TheDataEngineX/infradex) | Infrastructure | — |
+
+> **Note:** datadex, agentdex, and careerdex have been consolidated into [DEX](https://github.com/TheDataEngineX/DEX). Those repos are archived.
 
 Full observability stack (Prometheus + Grafana + Jaeger): see [infradex](https://github.com/TheDataEngineX/infradex) `docker-compose.monitoring.yml`.
 
@@ -120,4 +117,4 @@ Full observability stack (Prometheus + Grafana + Jaeger): see [infradex](https:/
 
 ---
 
-**Version**: v0.6.0 | **License**: MIT | **Python**: 3.12+
+**License**: MIT | **Python**: 3.13+

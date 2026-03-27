@@ -32,7 +32,7 @@ gate = QualityGate(
 ## Module Dependency Graph
 
 ```
-dataenginex.core          ← always available (pydantic, pyyaml, loguru)
+dataenginex.core          ← always available (pydantic, pyyaml, structlog)
 dataenginex.data          ← always available
 dataenginex.lakehouse     ← always available; cloud extras unlock backends
 dataenginex.warehouse     ← always available
@@ -77,7 +77,7 @@ All backends implement `read()`, `write()`, `list_objects(prefix)`, and `exists(
 
 ## API Architecture
 
-The API module provides reusable primitives only — no route definitions ship with `dataenginex`. Applications (e.g. `careerdex.api.routers`) define their own routes.
+The API module provides reusable primitives and route definitions. Applications use `dataenginex.api` routers directly or define their own.
 
 Provided utilities:
 - **Auth** — Pure-Python HS256 JWT (no pyjwt dependency)
@@ -90,7 +90,7 @@ Provided utilities:
 
 | Layer | Technology |
 |-------|------------|
-| Language | Python 3.12+ |
+| Language | Python 3.13+ |
 | Package Manager | uv + Hatchling |
 | Web Framework | FastAPI + Uvicorn (optional `[api]`) |
 | Orchestration | Apache Airflow |
@@ -122,7 +122,7 @@ DEX/
 │   ├── unit/            # Unit tests
 │   ├── integration/     # End-to-end tests (requires docker-compose.test.yml)
 │   └── fixtures/        # Sample data
-├── Dockerfile           # Multi-stage, non-root, port 8000
+├── Dockerfile           # Multi-stage, non-root, port 17000
 └── docker-compose.test.yml  # S3 + GCS emulators for integration tests
 ```
 

@@ -1,16 +1,6 @@
 name: Docs Pages Deploy
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - docs/**
-      - mkdocs.yml
-      - .github/workflows/docs-pages.yml
-      - pyproject.toml
-      - uv.lock
-      - poe_tasks.toml
   workflow_dispatch:
 
 permissions:
