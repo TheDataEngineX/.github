@@ -121,6 +121,16 @@ jobs:
             --generate-notes \
             --draft=false
 
+      - name: Notify docs site of new release
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DOCS_DISPATCH_TOKEN }}
+          repository: TheDataEngineX/docs
+          event-type: release
+          client-payload: >-
+            {"repo": "${{ github.repository }}", "tag": "${{ steps.version.outputs.tag }}"}
+
       - name: Set up Python for SBOM generation
         if: steps.check_tag.outputs.tag_exists == 'false'
         uses: actions/setup-python@v6
