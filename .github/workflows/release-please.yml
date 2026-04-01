@@ -5,6 +5,12 @@
 #   2. Creates/updates a Release PR that bumps pyproject.toml version + CHANGELOG.md
 #   3. When the Release PR is merged → creates git tag + GitHub Release
 #
+# Uses RELEASE_TOKEN (PAT) instead of GITHUB_TOKEN so the release:published
+# event fires and triggers downstream workflows (e.g. pypi-publish).
+# GITHUB_TOKEN-created releases suppress same-repo webhook events.
+#
+# Required secret: RELEASE_TOKEN — PAT with contents:write + pull-requests:write
+#
 # After a Release PR is opened/updated, uv.lock is regenerated and committed
 # to the PR branch so the lock file stays in sync with the version bump.
 #
@@ -30,7 +36,7 @@ jobs:
       - uses: googleapis/release-please-action@v4
         id: release-please
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
@@ -43,7 +49,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: ${{ fromJson(steps.release-please.outputs.pr).headBranchName }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Set up uv
         if: ${{ steps.release-please.outputs.pr }}
