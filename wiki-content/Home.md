@@ -104,7 +104,7 @@ Part of the [DataEngineX](https://github.com/TheDataEngineX) ecosystem:
 | [dex-studio](https://github.com/TheDataEngineX/dex-studio) | Desktop UI | 7860 |
 | [infradex](https://github.com/TheDataEngineX/infradex) | Infrastructure | — |
 
-> **Note:** datadex, agentdex, and careerdex have been consolidated into [DEX](https://github.com/TheDataEngineX/DEX). Those repos are archived.
+> **Note:** datadex and agentdex have been consolidated into [DEX](https://github.com/TheDataEngineX/DEX). careerdex is a standalone B2C product at [github.com/TheDataEngineX/careerdex](https://github.com/TheDataEngineX/careerdex).
 
 Full observability stack (Prometheus + Grafana + Jaeger): see [infradex](https://github.com/TheDataEngineX/infradex) `docker-compose.monitoring.yml`.
 
