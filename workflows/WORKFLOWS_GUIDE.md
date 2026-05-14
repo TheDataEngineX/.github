@@ -88,7 +88,7 @@ graph TB
 
 **What it does**:
 1. Detects version bump in `pyproject.toml`
-2. Creates git tag: `dataenginex-vX.Y.Z`
+2. Creates git tag: `vX.Y.Z`
 3. Creates GitHub release → **automatically triggers `pypi-publish.yml`**
 
 ---
@@ -117,16 +117,6 @@ graph TB
 
 ---
 
-### `label-sync.yml` - Label Taxonomy Sync
-**Triggers**: Push to `main` when `.github/labels.yml` changes, manual dispatch
-
-**Jobs**:
-- **sync-labels**: Synchronizes repository labels from `.github/labels.yml`
-
-**Purpose**: Keeps issue/PR labels consistent with maintainer taxonomy.
-
----
-
 ### `project-automation.yml` - Project Intake Automation
 **Triggers**: Issue/PR opened/reopened events, manual dispatch
 
@@ -152,7 +142,7 @@ gh run list --workflow ci.yml
 gh run view <run-id> --log
 
 # Trigger manual PyPI publish
-gh workflow run pypi-publish.yml -f tag=dataenginex-v0.6.0
+gh workflow run pypi-publish.yml -f tag=v0.6.0
 ```
 
 ---
@@ -180,7 +170,7 @@ graph TD
     FixCode --> Push[Push changes]
 
     Type -->|PyPI Publish Failure| CheckRelease["Check release-dataenginex logs"]
-    CheckRelease --> CheckTag[Verify tag format dataenginex-vX.Y.Z]
+    CheckRelease --> CheckTag[Verify tag format vX.Y.Z]
     CheckTag --> CheckPyPI[Check pypi-publish.yml logs]
 
     Push --> End[✓ Resolved]
@@ -198,7 +188,7 @@ uv run poe test
 ```
 
 ### PyPI Publish Not Triggering
-- Verify release tag format: `dataenginex-vMAJOR.MINOR.PATCH`
+- Verify release tag format: `vMAJOR.MINOR.PATCH`
 - Check that `release-dataenginex.yml` created the GitHub release
 - Confirm `src/dataenginex/` files changed since last tag
 

@@ -11,11 +11,11 @@ Unified Data + ML + AI framework — config-driven, self-hosted, production-read
 ---
 
 One `dex.yaml` defines your entire pipeline — from data ingestion through ML training to AI agents.
-Opinionated defaults that work out of the box, swap any layer for industry tools via extras.
+Opinionated defaults that work out of the box, swap any layer via extras.
 
 > **Self-hosted.** Your data never leaves your infrastructure.
 > **Config-driven.** One YAML file defines everything.
-> **Production-grade.** DuckDB, FastAPI, structlog, Prometheus metrics out of the box.
+> **Production-grade.** DuckDB, FastAPI, structlog, Prometheus, OpenTelemetry out of the box.
 
 ---
 
@@ -30,29 +30,30 @@ graph LR
         AC[ai:\nLLM, retrieval, agents]
     end
 
-    subgraph Core ["dataenginex"]
+    subgraph Core ["dataenginex (pip install)"]
         direction TB
-        REG[Backend Registry\nBase* ABCs + swappable backends]
-        API[FastAPI\nauth · rate limit · metrics]
-        OB[Observability\nstructlog · Prometheus · OTEL]
+        REG[Plugin Registry\nConnectors · Transforms · Backends]
+        API[FastAPI\nJWT · RBAC · SCIM · rate limit · metrics]
+        OB[Observability\nstructlog · Prometheus · OTEL · Langfuse]
     end
 
-    subgraph Extras ["pip install dataenginex\[extra\]"]
-        DAG[dagster]
-        MLF[mlflow]
-        LG[langgraph]
-        QD[qdrant]
+    subgraph Extras ["pip install dataenginex[extra]"]
+        CL[cloud: S3 · GCS · BigQuery]
+        AU[auth: RS256/JWKS · SCIM v2 · LDAP]
+        OV[observability: Langfuse LLM tracing]
     end
 
     Config --> Core
     Extras -->|same interface| Core
 
-    subgraph Deploy
-        UI[DEX Studio\nweb UI]
+    subgraph Products
+        B2B[DEX Studio\nB2B platform UI]
+        B2C[CareerDEX\nB2C career AI]
         INF[InfraDEX\nK3s · Helm · Terraform]
     end
 
-    UI -->|HTTP| Core
+    B2B -->|HTTP :17000| Core
+    B2C -->|Python lib| Core
     INF -->|deploys| Core
 ```
 
@@ -62,9 +63,10 @@ graph LR
 
 | Repo | What it does | Status |
 | --- | --- | --- |
-| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config system, backend registry, CLI, API, ML, AI agents | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
-| [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | Web UI: single pane of glass for projects, pipelines, ML, agents (NiceGUI) | Alpha |
-| [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC + monitoring: Terraform, Helm, K3s, Prometheus, Grafana | Alpha |
+| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config, CLI, FastAPI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, RBAC, SCIM v2 | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
+| [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | B2B web UI: pipelines, ML experiments, AI playground, SQL console (Reflex/Python→React) | Alpha |
+| [**careerdex**](https://github.com/TheDataEngineX/careerdex) | B2C career AI: job matching, resume analysis, interview prep, application tracking (Reflex) | Alpha |
+| [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC: K3s, Helm charts, Terraform — Authentik, Langfuse, Qdrant, Prometheus, Grafana, ArgoCD | Alpha |
 
 ---
 
@@ -72,26 +74,23 @@ graph LR
 
 ```bash
 pip install dataenginex
-dex init my-project --template full-stack
 dex validate dex.yaml
-dex serve                    # → http://localhost:17000
+dex serve --config dex.yaml   # → http://localhost:17000
 ```
 
 ```bash
 # From source
 git clone https://github.com/TheDataEngineX/DEX && cd DEX
-uv sync && uv run poe dev   # → http://localhost:17000
+uv sync && uv run poe dev     # → http://localhost:17000
 ```
 
 **Optional extras:**
 
 ```bash
-pip install dataenginex[dagster]     # Dagster orchestration
-pip install dataenginex[mlflow]      # MLflow tracking
-pip install dataenginex[agents]      # LangGraph agent runtime
-pip install dataenginex[vectors]     # Qdrant + LanceDB
-pip install dataenginex[embeddings]  # sentence-transformers + ONNX
-pip install dataenginex[all]         # Everything
+pip install "dataenginex[cloud]"         # S3 · GCS · BigQuery connectors
+pip install "dataenginex[auth]"          # RS256/JWKS · SCIM v2 · LDAP sync
+pip install "dataenginex[observability]" # Langfuse LLM tracing
+pip install 'litellm>=1.83.3' --no-deps  # 100+ LLM providers (separate install)
 ```
 
 ---
@@ -104,7 +103,8 @@ pip install dataenginex[all]         # Everything
 | **Install** | `pip install dataenginex` | 10+ packages to wire together |
 | **Backends** | Swap via extras, same interface | Rewrite integration code |
 | **Self-hosted** | Works on laptop, VPS, or K8s | Cloud lock-in or complex setup |
-| **Observability** | structlog + Prometheus + OTEL built-in | Manual instrumentation |
+| **Observability** | structlog + Prometheus + OTEL + Langfuse | Manual instrumentation |
+| **Enterprise** | RBAC, SCIM v2, LDAP, OIDC ready | Build it yourself |
 
 ---
 
@@ -112,12 +112,12 @@ pip install dataenginex[all]         # Everything
 
 | | |
 | --- | --- |
-| **Documentation** | [docs.dataenginex.org](https://docs.dataenginex.org) |
+| **Documentation** | [docs.thedataenginex.org](https://docs.thedataenginex.org) |
 | **Discussions** | [github.com/orgs/TheDataEngineX/discussions](https://github.com/orgs/TheDataEngineX/discussions) |
 | **Bug reports** | Open an issue in the relevant repo |
 | **Contributing** | [CONTRIBUTING.md](https://github.com/TheDataEngineX/.github/blob/main/CONTRIBUTING.md) |
 | **Security** | [SECURITY.md](https://github.com/TheDataEngineX/.github/blob/main/SECURITY.md) |
-| **Website** | [dataenginex.org](https://dataenginex.org) |
+| **Website** | [thedataenginex.org](https://thedataenginex.org) |
 
 ---
 

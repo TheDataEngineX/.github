@@ -15,9 +15,10 @@ jobs:
     steps:
       - name: Check source branch
         run: |
-          if [ "${{ github.head_ref }}" != "dev" ]; then
-            echo "PRs to main must come from the 'dev' branch."
-            echo "Source branch: ${{ github.head_ref }}"
+          branch="${{ github.head_ref }}"
+          if [ "$branch" != "dev" ] && [[ "$branch" != release-please--* ]]; then
+            echo "PRs to main must come from 'dev' or a release-please branch."
+            echo "Source branch: $branch"
             exit 1
           fi
-          echo "Source branch is 'dev' — OK"
+          echo "Source branch is '$branch' — OK"

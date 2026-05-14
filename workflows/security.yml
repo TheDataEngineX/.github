@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Security Scan Start
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         if: always()
         with:
           script: |
@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/checkout@v6
       - name: Run Trivy repo security scan
-        uses: aquasecurity/trivy-action@0.35.0
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -66,7 +66,7 @@ jobs:
           sarif_file: trivy-repo-results.sarif
 
       - name: Enforce Trivy misconfig gate (HIGH/CRITICAL)
-        uses: aquasecurity/trivy-action@0.35.0
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Notify Security Success
         if: ${{ needs.trivy-security.result == 'success' && needs.codeql.result == 'success' }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             if (!process.env.SLACK_WEBHOOK) return;
@@ -139,7 +139,7 @@ jobs:
 
       - name: Notify Security Issues
         if: ${{ needs.trivy-security.result == 'failure' || needs.codeql.result == 'failure' }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             if (!process.env.SLACK_WEBHOOK) return;
