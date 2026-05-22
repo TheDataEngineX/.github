@@ -33,13 +33,11 @@ graph LR
     subgraph Core ["dataenginex (pip install)"]
         direction TB
         REG[Plugin Registry\nConnectors · Transforms · Backends]
-        API[FastAPI\nJWT · RBAC · SCIM · rate limit · metrics]
         OB[Observability\nstructlog · Prometheus · OTEL · Langfuse]
     end
 
     subgraph Extras ["pip install dataenginex[extra]"]
         CL[cloud: S3 · GCS · BigQuery]
-        AU[auth: RS256/JWKS · SCIM v2 · LDAP]
         OV[observability: Langfuse LLM tracing]
     end
 
@@ -52,7 +50,7 @@ graph LR
         INF[InfraDEX\nK3s · Helm · Terraform]
     end
 
-    B2B -->|HTTP :17000| Core
+    B2B -->|Python lib| Core
     B2C -->|Python lib| Core
     INF -->|deploys| Core
 ```
@@ -63,9 +61,9 @@ graph LR
 
 | Repo | What it does | Status |
 | --- | --- | --- |
-| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config, CLI, FastAPI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, RBAC, SCIM v2 | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
-| [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | B2B web UI: pipelines, ML experiments, AI playground, SQL console (Reflex/Python→React) | Alpha |
-| [**careerdex**](https://github.com/TheDataEngineX/careerdex) | B2C career AI: job matching, resume analysis, interview prep, application tracking (Reflex) | Alpha |
+| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config, CLI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, DuckDB lakehouse — pure Python library | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
+| [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | B2B web UI: pipelines, ML experiments, AI playground, SQL console (FastAPI/Jinja2 + HTMX) | Alpha |
+| [**careerdex**](https://github.com/TheDataEngineX/careerdex) | B2C career AI: job matching, resume analysis, interview prep, application tracking | Alpha |
 | [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC: K3s, Helm charts, Terraform — Authentik, Langfuse, Qdrant, Prometheus, Grafana, ArgoCD | Alpha |
 
 ---
@@ -75,20 +73,25 @@ graph LR
 ```bash
 pip install dataenginex
 dex validate dex.yaml
-dex serve --config dex.yaml   # → http://localhost:17000
+```
+
+```python
+from dataenginex.engine import DexEngine
+
+engine = DexEngine("dex.yaml")
+engine.run_pipeline("clean_users")
 ```
 
 ```bash
-# From source
-git clone https://github.com/TheDataEngineX/DEX && cd DEX
-uv sync && uv run poe dev     # → http://localhost:17000
+# Web UI (DEX Studio)
+pip install dex-studio
+dex-studio --config dex.yaml  # → http://localhost:7860
 ```
 
 **Optional extras:**
 
 ```bash
 pip install "dataenginex[cloud]"         # S3 · GCS · BigQuery connectors
-pip install "dataenginex[auth]"          # RS256/JWKS · SCIM v2 · LDAP sync
 pip install "dataenginex[observability]" # Langfuse LLM tracing
 pip install 'litellm>=1.83.3' --no-deps  # 100+ LLM providers (separate install)
 ```
@@ -104,7 +107,7 @@ pip install 'litellm>=1.83.3' --no-deps  # 100+ LLM providers (separate install)
 | **Backends** | Swap via extras, same interface | Rewrite integration code |
 | **Self-hosted** | Works on laptop, VPS, or K8s | Cloud lock-in or complex setup |
 | **Observability** | structlog + Prometheus + OTEL + Langfuse | Manual instrumentation |
-| **Enterprise** | RBAC, SCIM v2, LDAP, OIDC ready | Build it yourself |
+| **UI** | DEX Studio: pipelines, ML, AI agents, SQL | Build it yourself |
 
 ---
 
