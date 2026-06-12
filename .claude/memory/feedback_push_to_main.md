@@ -9,7 +9,7 @@ Push events to `main` from our squash-merge PRs intermittently don't trigger Git
 **Why:** Unknown root cause — possibly GitHub Actions webhook delivery issue for certain merge patterns. Not reproducible via any obvious configuration fix.
 
 **How to apply:**
-- After merging any important PR to dex/main, verify workflows fired: `gh api "repos/TheDataEngineX/dex/actions/runs?head_sha=<SHA>" --jq '.total_count'`
+- After merging any important PR to dex/main, verify workflows fired: `gh api "repos/TheDataEngineX/dataenginex/actions/runs?head_sha=<SHA>" --jq '.total_count'`
 - If zero: create GitHub Release manually → triggers pypi-publish via `release:published` event
 - Or dispatch: `gh workflow run release-dataenginex.yml --ref main` (has workflow_dispatch since PR#161)
 - Release-please creates releases natively (not from a workflow), so `release:published` fires reliably — this is the current mitigation

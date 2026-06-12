@@ -2,7 +2,7 @@
 
 ## Medallion Data Pipeline
 
-DEX implements the medallion (lakehouse) architecture as its core data processing pattern:
+dataenginex implements the medallion (lakehouse) architecture as its core data processing pattern:
 
 ```
 Raw Sources (APIs, files, streams)
@@ -105,7 +105,7 @@ Provided utilities:
 ## Project Structure
 
 ```
-DEX/
+dataenginex/
 ├── src/
 │   └── dataenginex/
 │       ├── api/         # FastAPI utilities (auth, health, pagination, rate limiting)
@@ -126,7 +126,7 @@ DEX/
 └── docker-compose.test.yml  # S3 + GCS emulators for integration tests
 ```
 
-## DEX Ecosystem Data Flow
+## dataenginex Ecosystem Data Flow
 
 ```
 Ingest → Process (Spark/Flink) → Lakehouse → Warehouse → Feature Store → Model Serving → AI Apps & Agents

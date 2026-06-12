@@ -2,7 +2,7 @@
 
 Unified Data + ML + AI framework — config-driven, self-hosted, production-ready
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/TheDataEngineX/DEX/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/TheDataEngineX/dataenginex/blob/main/LICENSE)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI](https://img.shields.io/pypi/v/dataenginex?label=dataenginex)](https://pypi.org/project/dataenginex/)
 [![Docs](https://img.shields.io/badge/docs-thedataenginex.org-informational)](https://docs.thedataenginex.org)
@@ -61,7 +61,7 @@ graph LR
 
 | Repo | What it does | Status |
 | --- | --- | --- |
-| [**DEX**](https://github.com/TheDataEngineX/DEX) | Core framework: config, CLI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, DuckDB lakehouse — pure Python library | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
+| [**DEX**](https://github.com/TheDataEngineX/dataenginex) | Core framework: config, CLI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, DuckDB lakehouse — pure Python library | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
 | [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | B2B web UI: pipelines, ML experiments, AI playground, SQL console (FastAPI/Jinja2 + HTMX) | Alpha |
 | [**careerdex**](https://github.com/TheDataEngineX/careerdex) | B2C career AI: job matching, resume analysis, interview prep, application tracking | Alpha |
 | [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC: K3s, Helm charts, Terraform — Authentik, Langfuse, Qdrant, Prometheus, Grafana, ArgoCD | Alpha |

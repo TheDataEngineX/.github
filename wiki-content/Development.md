@@ -6,7 +6,7 @@
 - [uv](https://docs.astral.sh/uv/) package manager
 
 ```bash
-git clone https://github.com/TheDataEngineX/DEX && cd DEX
+git clone https://github.com/TheDataEngineX/dataenginex && cd dataenginex
 uv run poe setup    # install deps + pre-commit hooks
 ```
 

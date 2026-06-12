@@ -58,7 +58,7 @@ Never `pip install` in workflows.
 ## Coverage upload
 
 ```yaml
-- uses: codecov/codecov-action@v5
+- uses: codecov/codecov-action@v7
   with:
     flags: <repo-name>
     fail_ci_if_error: false

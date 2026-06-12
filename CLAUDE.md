@@ -8,9 +8,9 @@ Workspace-wide rules: **dex · dex-studio · infradex**. Repo-specific context i
 
 | Repo | Package | Port | Purpose |
 |------|---------|------|---------|
-| `dex` | `dataenginex` | 17000 | Core framework — config, registry, CLI, API, ML, AI (routing, runtime, memory, observability, workflows) |
-| `dex-studio` | `dex-studio` | 7860 | Web UI — NiceGUI single pane of glass |
-| `infradex` | — | — | K3s / Helm / Terraform infrastructure |
+| `dex` | `dataenginex` | — | Core library — config, registry, CLI, pipelines, ML, AI, PrivacyGuard (pure Python, no HTTP server) |
+| `dex-studio` | `dex-studio` | 7860 | Web UI — FastAPI + Jinja2 + HTMX, direct dataenginex import |
+| `infradex` | — | — | K3s / Helm / Terraform / ArgoCD infrastructure |
 
 ## Git
 
