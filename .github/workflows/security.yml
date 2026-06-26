@@ -20,6 +20,7 @@ jobs:
     permissions:
       contents: read
       security-events: write
+      actions: read
     steps:
       - name: Notify Security Scan Start
         uses: actions/github-script@v9
@@ -82,6 +83,7 @@ jobs:
     if: always()
     permissions:
       contents: read
+      actions: read
 
     steps:
       - name: Notify Security Success
