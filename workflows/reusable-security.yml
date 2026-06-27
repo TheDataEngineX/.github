@@ -2,8 +2,8 @@
 # Logic lives here once; repo files are thin callers.
 #
 # Runs Trivy (misconfig + secret scan) on push/PR.
-# CodeQL is handled by GitHub's default setup — do NOT add a custom codeql job
-# (GitHub rejects SARIF uploads when default setup is enabled).
+# CodeQL is handled per-repo via GitHub's default setup (only dex-studio has it active).
+# Do NOT add a custom codeql job — GitHub rejects duplicate SARIF uploads.
 # Results appear in GitHub Security tab.
 
 name: Security Scans (reusable)
