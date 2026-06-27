@@ -9,29 +9,24 @@ conventional commits merged to main
   → release-please opens Release PR (bumps pyproject.toml + CHANGELOG + uv.lock)
   → Developer reviews and merges PR
   → release-please creates tag v{version} + GitHub Release automatically
-  → pypi-publish.yml publishes to PyPI  (dex only)
-  → release-dataenginex.yml attaches SBOM  (dex only)
+  → release.yml publishes to PyPI and attaches SBOM  (dex only)
 ```
 
 ## Prerequisites
 
 - All tests passing: `uv run poe check-all`
-- Changes merged to `main` via `dev` (feature branch → dev → main)
+- PRs merged to `main` (feature branch → main)
 - Commits follow conventional commit format (`feat:`, `fix:`, `chore:`, etc.)
 
 ## Steps
 
-1. **Verify pipeline triggered**
+1. **Verify release-please app triggered**
 
    ```bash
-   gh run list --workflow=release-please.yml --limit 5
+   gh pr list --label "autorelease: pending" --limit 5
    ```
 
-1. **Check for open Release PR**
 
-   ```bash
-   gh pr list --label "autorelease: pending"
-   ```
 
 1. **Review the Release PR**
 
@@ -42,8 +37,7 @@ conventional commits merged to main
 1. **Monitor post-merge pipeline** (dex only)
 
    ```bash
-   gh run list --workflow=pypi-publish.yml --limit 5
-   gh run list --workflow=release-dataenginex.yml --limit 5
+   gh run list --workflow=release.yml --limit 5
    ```
 
 1. **Verify release**

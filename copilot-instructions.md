@@ -10,11 +10,9 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 | Repo | Package | Purpose | Port |
 |------|---------|---------|------|
-| `dataenginex` (dex) | `dataenginex` | Core framework — config, registry, CLI, API, ML, AI | 17000 |
-| `dex-studio` | `dex-studio` | Web UI — single pane of glass (NiceGUI) | 7860 |
-| `infradex` | — | IaC + monitoring (Terraform, Helm, K3s) | — |
-
-> datadex, agentdex, and careerdex consolidated into `dataenginex` as submodules.
+| `dataenginex` (dex) | `dataenginex` | Core library — config, registry, CLI, pipelines, ML, AI, PrivacyGuard (pure Python, no HTTP server) | — |
+| `dex-studio` | `dex-studio` | Web UI — FastAPI + Jinja2 + HTMX, direct dataenginex import | 7860 |
+| `infradex` | — | K3s / Helm / Terraform / ArgoCD infrastructure | — |
 
 ---
 
@@ -66,23 +64,23 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 ### Context7 MCP
 
-Always use Context7 MCP for library/API docs (FastAPI, PySpark, Pydantic, Airflow, NiceGUI) — without the user having to ask.
+Always use Context7 MCP for library/API docs (FastAPI, Pydantic, ArgoCD, Helm, etc.) — without the user having to ask.
 
 ---
 
 ## Cross-Repo Sync Policy
 
-Verify consistency across all 3 repos on every `dev → main` PR.
+Verify consistency across all 3 repos on every `feature → main` PR.
 
 ### Required workflows in all repos
 
-`ci.yml` · `enforce-dev-to-main.yml` · `claude.yml` · `security.yml` · `release-please.yml`
+`ci.yml` · `security.yml`
 
 ### Required files in all repos
 
-`CLAUDE.md` · `README.md` · `pyproject.toml` · `uv.lock` · `tasks/todo.md` · `tasks/lessons.md` · `tasks/findings.md` · `.github/PULL_REQUEST_TEMPLATE.md` · `.github/dependabot.yml` · `CODEOWNERS` · `LICENSE`
+`CLAUDE.md` · `README.md` · `pyproject.toml` · `uv.lock` · `LICENSE`
 
-Do NOT copy dex-only workflows (`pypi-publish.yml`, `release-dataenginex.yml`) to other repos.
+Do NOT copy dex-only workflows (`release.yml`) to other repos.
 
 ---
 

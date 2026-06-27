@@ -122,7 +122,7 @@ dataenginex/
 │   ├── unit/            # Unit tests
 │   ├── integration/     # End-to-end tests (requires docker-compose.test.yml)
 │   └── fixtures/        # Sample data
-├── Dockerfile           # Multi-stage, non-root, port 17000
+├── Dockerfile           # Multi-stage, non-root, port 7860
 └── docker-compose.test.yml  # S3 + GCS emulators for integration tests
 ```
 

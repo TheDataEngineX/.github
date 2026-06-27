@@ -4,7 +4,7 @@ This policy explains how people may use the DataEngineX name and branding.
 
 ## Purpose
 
-DEX is open source and free to use under the project license. At the same time, the project name and identity should not be misrepresented.
+DataEngineX (formerly DEX) is open source and free to use under the project license. At the same time, the project name and identity should not be misrepresented.
 
 ## Code vs Brand
 
@@ -15,16 +15,16 @@ Open source access to code does **not** automatically grant permission to use pr
 
 ## Allowed Without Permission
 
-- Saying your project is “built with DataEngineX (DEX)”.
+- Saying your project is “built with DataEngineX”.
 - Linking to this repository and citing it in documentation.
 - Creating forks for learning, experimentation, and contribution.
-- Referring to compatibility (for example: “compatible with DEX APIs”).
+- Referring to compatibility (for example: “compatible with DataEngineX APIs”).
 
 ## Not Allowed Without Permission
 
-- Publishing a modified fork using the names “DataEngineX” or “DEX” as the primary project name.
+- Publishing a modified fork using the name “DataEngineX” as the primary project name.
 - Using project logos/branding in a way that suggests your fork is the official project.
-- Releasing packages, Docker images, or products that could reasonably be confused with official DEX releases.
+- Releasing packages, Docker images, or products that could reasonably be confused with official DataEngineX releases.
 - Claiming authorship/ownership of the original DataEngineX project.
 
 ## Official Package and Image Names

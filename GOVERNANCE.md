@@ -1,17 +1,17 @@
 # Governance and Legal
 
-This document defines the governance model and legal posture for DEX (DataEngineX).
+This document defines the governance model and legal posture for DataEngineX.
 
 ## Legal Structure
 
-DEX is currently maintained as an open-source project under maintainer stewardship.
+DataEngineX is currently maintained as an open-source project under maintainer stewardship.
 
 - Current model: maintainer-led open-source project
 - Future option: migrate to a formal legal entity (foundation/non-profit/company-backed OSS) if scale or compliance requires it
 
 ## Open-Source License
 
-DEX is licensed under the OSI-approved MIT License.
+DataEngineX is licensed under the OSI-approved MIT License.
 
 - License file: `LICENSE`
 - SPDX identifier: `MIT`
@@ -48,7 +48,7 @@ Code is open under MIT, but branding and project identity are protected by polic
 
 ## Governance Evolution
 
-If DEX grows substantially, maintainers may adopt:
+If DataEngineX grows substantially, maintainers may adopt:
 
 - A steering group or maintainer council
 - A published release governance cadence

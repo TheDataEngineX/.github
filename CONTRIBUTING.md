@@ -19,7 +19,7 @@ the org-wide contribution process. Individual repos may have additional guidelin
 
 ### Submitting Pull Requests
 
-1. Fork the repo and create a feature branch: `feature/<description>` or `fix/<description>`
+1. Fork the repo and create a feature branch with a descriptive name
 2. Follow [Conventional Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`
 3. Ensure all checks pass before requesting review
 4. Reference related issues: `feat: add drift detection (#42)`

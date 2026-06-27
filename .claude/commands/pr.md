@@ -2,15 +2,15 @@ Generate a PR description for the current branch's changes.
 
 ## Branch Convention
 
-Branch must follow `feature/<desc>` or `fix/<desc>` pattern.
-Target must be `dev` — NEVER `main` directly.
+Branch must have a descriptive name.
+Target must be `main` — feature → PR to `main`.
 
 ## Steps
 
 1. Verify branch naming: `git branch --show-current`
-1. Run `git log --oneline dev..HEAD` to see commits
-1. Run `git diff dev --stat` to see changed files
-1. Run `git diff dev` for the actual changes
+1. Run `git log --oneline origin/main..HEAD` to see commits
+1. Run `git diff origin/main --stat` to see changed files
+1. Run `git diff origin/main` for the actual changes
 1. Categorize changes:
    - **What** — What changed and why
    - **How** — Implementation approach

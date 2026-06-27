@@ -44,7 +44,7 @@ docker compose -f docker-compose.test.yml down
 
 | Command | Description |
 |---------|-------------|
-| `uv run poe dev` | Dev server (uvicorn reload, port 17000) |
+| `uv run poe dev` | Dev server (uvicorn reload, port 7860) |
 | `uv run poe docker-up` | Docker Compose up |
 | `uv run poe docker-down` | Docker Compose down |
 
@@ -75,9 +75,9 @@ uv run poe test
 # 4. Real server smoke test
 uv run python examples/02_api_quickstart.py
 # Then verify endpoints:
-# curl http://localhost:17000/health
-# curl http://localhost:17000/
-# curl http://localhost:17000/metrics
+# curl http://localhost:7860/health
+# curl http://localhost:7860/
+# curl http://localhost:7860/metrics
 
 # 5. Standalone import check
 python -c "from dataenginex.core import MedallionArchitecture, QualityGate"
@@ -111,10 +111,10 @@ Tests passing does not equal the app working. Step 4 is non-negotiable.
 
 ## Git Conventions
 
-- Branches: `main` (prod), `dev` (integration), `feature/<desc>`, `fix/<desc>`
+- Branches: `main` (prod), any descriptive name for features
 - Commits: Conventional — `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`
 - Reference issues: `feat: add drift detection (#42)`
-- Deployment: `dev` → staging/dev cluster, `main` → production
+- Deployment: `main` → production (feature → PR to `main`)
 
 ## Running Examples
 

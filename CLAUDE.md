@@ -1,4 +1,4 @@
-# CLAUDE.md — DEX Workspace
+# CLAUDE.md — DataEngineX Workspace
 
 Be pragmatic, direct, and challenge assumptions. No sugarcoating. Point out blank spots and opportunity costs. If something is wrong or won't work, say so. Find root causes, never workarounds.
 
@@ -14,8 +14,8 @@ Workspace-wide rules: **dex · dex-studio · infradex**. Repo-specific context i
 
 ## Git
 
-- **Branches:** `feature/<desc>` or `fix/<desc>` — never commit to `dev` or `main` directly
-- **Flow:** feature → PR to `dev` → PR to `main`
+- **Branches:** Any descriptive name — never commit to `main` directly
+- **Flow:** feature → PR to `main`
 - **Order:** commit `dex` before `dex-studio`/`infradex` (dex is upstream)
 - **Author:** `git commit --author="jaymyaka <jayapal.myaka99@gmail.com>"` — no Co-Authored-By
 
@@ -42,13 +42,9 @@ Release-please automates versioning. Never bump manually. Pre-commit hook handle
 ## Tooling
 
 - **Tasks:** `poe lint` / `poe test` / `poe check-all` / `poe dev` — defined in `poe_tasks.toml`
-- **Hooks:** `.github/scripts/pre-commit-version-bump.sh` (`uv run poe install-hooks`)
-- **Workflows:** `.github/.github/workflows/` (security, release-please, enforce-dev-to-main)
-- **Slash commands:** `/validate` `/review` `/pr` `/new-feature` `/fix-lint` `/debug`
+- **Workflows:** `.github/workflows/reusable-*.yml` (shared workflows called from each repo: security, auto-pr-to-main)
 
 ## Production Rules
 
 - Root-cause fixes only — no `# type: ignore` without explanation
-- Ask before committing — show diff, wait for approval
-- Ask before pushing
 - Always WebSearch/WebFetch for latest package versions — never assume from training

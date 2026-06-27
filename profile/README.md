@@ -45,13 +45,11 @@ graph LR
     Extras -->|same interface| Core
 
     subgraph Products
-        B2B[DEX Studio\nB2B platform UI]
-        B2C[CareerDEX\nB2C career AI]
+        B2B[dex-studio\nB2B platform UI]
         INF[InfraDEX\nK3s · Helm · Terraform]
     end
 
     B2B -->|Python lib| Core
-    B2C -->|Python lib| Core
     INF -->|deploys| Core
 ```
 
@@ -61,9 +59,8 @@ graph LR
 
 | Repo | What it does | Status |
 | --- | --- | --- |
-| [**DEX**](https://github.com/TheDataEngineX/dataenginex) | Core framework: config, CLI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, DuckDB lakehouse — pure Python library | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
+| [**dataenginex**](https://github.com/TheDataEngineX/dataenginex) | Core framework: config, CLI, ML registry, LLM routing (LiteLLM/vLLM), AI agents, DuckDB lakehouse — pure Python library | [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/) |
 | [**dex-studio**](https://github.com/TheDataEngineX/dex-studio) | B2B web UI: pipelines, ML experiments, AI playground, SQL console (FastAPI/Jinja2 + HTMX) | Alpha |
-| [**careerdex**](https://github.com/TheDataEngineX/careerdex) | B2C career AI: job matching, resume analysis, interview prep, application tracking | Alpha |
 | [**infradex**](https://github.com/TheDataEngineX/infradex) | IaC: K3s, Helm charts, Terraform — Authentik, Langfuse, Qdrant, Prometheus, Grafana, ArgoCD | Alpha |
 
 ---
@@ -83,7 +80,7 @@ engine.run_pipeline("clean_users")
 ```
 
 ```bash
-# Web UI (DEX Studio)
+# Web UI (dex-studio)
 pip install dex-studio
 dex-studio --config dex.yaml  # → http://localhost:7860
 ```
@@ -107,7 +104,7 @@ pip install 'litellm>=1.83.3' --no-deps  # 100+ LLM providers (separate install)
 | **Backends** | Swap via extras, same interface | Rewrite integration code |
 | **Self-hosted** | Works on laptop, VPS, or K8s | Cloud lock-in or complex setup |
 | **Observability** | structlog + Prometheus + OTEL + Langfuse | Manual instrumentation |
-| **UI** | DEX Studio: pipelines, ML, AI agents, SQL | Build it yourself |
+| **UI** | dex-studio: pipelines, ML, AI agents, SQL | Build it yourself |
 
 ---
 

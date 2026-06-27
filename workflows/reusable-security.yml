@@ -1,0 +1,83 @@
+# Reusable workflow — called from each repo's .github/workflows/security.yml
+# Logic lives here once; repo files are thin callers.
+#
+# Runs Trivy (misconfig + secret scan) on push/PR.
+# CodeQL is handled by GitHub's default setup — do NOT add a custom codeql job
+# (GitHub rejects SARIF uploads when default setup is enabled).
+# Results appear in GitHub Security tab.
+
+name: Security Scans (reusable)
+
+on:
+  workflow_call:
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+jobs:
+  trivy-security:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Trivy repo security scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: misconfig,secret
+          format: sarif
+          output: trivy-repo-results.sarif
+          severity: HIGH,CRITICAL
+          exit-code: '0'
+
+      - name: Upload Trivy repo results to GitHub Security
+        if: always()
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-repo-results.sarif
+
+      - name: Enforce Trivy misconfig gate (HIGH/CRITICAL)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: misconfig
+          format: table
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+
+      - name: Notify Slack
+        if: always()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            if (!process.env.SLACK_WEBHOOK) return;
+            const status = process.env.STATUS === 'success' ? 'passed' : 'failed';
+            const emoji = process.env.STATUS === 'success' ? '✅' : '⚠️';
+            try {
+              await fetch(process.env.SLACK_WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  text: `${emoji} Security scans ${status}`,
+                  blocks: [{
+                    type: 'section',
+                    text: { type: 'mrkdwn', text: `*${emoji} Security Scans ${status === 'passed' ? 'Passed' : 'Issues Detected'}*` }
+                  }, {
+                    type: 'section',
+                    fields: [
+                      { type: 'mrkdwn', text: `*Branch:* ${process.env.REF}` },
+                      { type: 'mrkdwn', text: `*Run:* <${process.env.URL}|View Details>` }
+                    ]
+                  }]
+                })
+              });
+            } catch (e) { console.log('Slack notification failed:', e.message); }
+        env:
+          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
+          STATUS: ${{ job.status }}
+          REF: ${{ github.ref_name }}
+          URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

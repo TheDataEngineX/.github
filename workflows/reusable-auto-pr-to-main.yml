@@ -1,4 +1,4 @@
-name: Auto PR — dev → main (reusable)
+name: Auto PR — branch → main (reusable)
 
 on:
   workflow_call:
@@ -12,21 +12,25 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Create or update PR (dev → main)
+      - name: Create or update PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
+          HEAD: ${{ github.ref_name }}
         run: |
-          AHEAD=$(gh api "repos/$GH_REPO/compare/main...dev" --jq '.ahead_by')
-          if [ "$AHEAD" = "0" ]; then
-            echo "dev is already in sync with main — nothing to do"
-            exit 0
+          if echo "$HEAD" | grep -qE '^fix[-/]'; then
+            TITLE="fix: $(echo "$HEAD" | sed 's|^fix[-/]||;s|-| |g')"
+          elif echo "$HEAD" | grep -qE '^feat[-/]'; then
+            TITLE="feat: $(echo "$HEAD" | sed 's|^feat[-/]||;s|-| |g')"
+          else
+            TITLE="feat: $(echo "$HEAD" | sed 's|-| |g')"
           fi
-          echo "dev is $AHEAD commit(s) ahead of main"
+
+          echo "PR title: $TITLE"
 
           PR_NUMBER=$(gh pr list \
             --base main \
-            --head dev \
+            --head "$HEAD" \
             --state open \
             --json number \
             --jq '.[0].number')
@@ -34,15 +38,16 @@ jobs:
           if [ -n "$PR_NUMBER" ]; then
             echo "PR #$PR_NUMBER already exists"
           else
+            BODY="Automated PR: ${HEAD} → main. Review the preview environment before merging."
             gh pr create \
               --base main \
-              --head dev \
-              --title "chore: sync dev -> main" \
-              --body "Automated PR: dev → main. Merge when all required checks pass."
+              --head "$HEAD" \
+              --title "$TITLE" \
+              --body "$BODY"
 
             PR_NUMBER=$(gh pr list \
               --base main \
-              --head dev \
+              --head "$HEAD" \
               --state open \
               --json number \
               --jq '.[0].number')

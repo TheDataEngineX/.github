@@ -13,7 +13,7 @@ applyTo: ".github/workflows/**/*.yml"
 | `actions/upload-artifact` | `@v7` |
 | `actions/download-artifact` | `@v8` |
 | `astral-sh/setup-uv` | `@v7` |
-| `codecov/codecov-action` | `@v5` |
+| `codecov/codecov-action` | `@v7` |
 | `github/codeql-action/*` | `@v4` |
 | `actions/github-script` | `@v8` |
 
@@ -62,8 +62,6 @@ Never `pip install` in workflows.
   with:
     flags: <repo-name>
     fail_ci_if_error: false
-  env:
-    CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 ```
 
 ## Checklist

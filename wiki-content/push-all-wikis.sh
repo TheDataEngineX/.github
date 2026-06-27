@@ -32,5 +32,3 @@ push_wiki() {
 }
 
 push_wiki dataenginex "${SCRIPT_DIR}"
-push_wiki dex-studio  "${SCRIPT_DIR}/wiki-dex-studio"
-push_wiki infradex    "${SCRIPT_DIR}/wiki-infradex"

@@ -61,21 +61,21 @@ _Nothing yet._
 
 - **Source:** <https://platform.claude.com/docs/en/release-notes/overview>
 - **Finding:** `claude-3-opus-20240229` retired Jan 5; `claude-3-7-sonnet-20250219` and `claude-3-5-haiku-20241022` retired Feb 19. `claude-3-haiku-20240307` retiring Apr 19, 2026.
-- **Impact:** Audited agentdex — only `claude-sonnet-4-6` used (current). No deprecated model IDs found.
+- **Impact:** Audited dataenginex — only `claude-sonnet-4-6` used (current). No deprecated model IDs found.
 - **Status:** confirmed — no action needed
 
 ### 2026-03-19 — Anthropic API: budget\_tokens deprecated, output\_config.format
 
 - **Source:** <https://platform.claude.com/docs/en/release-notes/overview>
 - **Finding:** Opus 4.6 (Feb 2026) replaces `budget_tokens` with `effort` param + `thinking: {type: "adaptive"}`. `output_format` param moved to `output_config.format`. Opus 4.6 does not support prefilling assistant messages.
-- **Impact:** Audited agentdex — no `budget_tokens` usage, no assistant prefilling. Anthropic provider is a stub (NotImplementedError). Track when stubs are implemented.
+- **Impact:** Audited dataenginex — no `budget_tokens` usage, no assistant prefilling. Anthropic provider is a stub (NotImplementedError). Track when stubs are implemented.
 - **Status:** confirmed — no action needed (stubs not yet implemented)
 
 ### 2026-03-19 — Anthropic beta headers no longer required for GA features
 
 - **Source:** <https://platform.claude.com/docs/en/release-notes/overview>
 - **Finding:** Web search, programmatic tool calling, code execution, tool search, and memory tool all went GA Feb 17, 2026. Beta headers are no longer needed.
-- **Impact:** Audited agentdex — no `anthropic-beta` headers used anywhere.
+- **Impact:** Audited dataenginex — no `anthropic-beta` headers used anywhere.
 - **Status:** confirmed — no action needed
 
 ### 2026-03-19 — Airflow 3.0 — FAB removed, metadata DB blocked, SequentialExecutor dropped
@@ -96,5 +96,5 @@ _Nothing yet._
 
 - **Source:** <https://github.com/astral-sh/uv/releases>
 - **Finding:** uv 0.10.8 switches default binary/CPython mirror from python.org to Astral mirrors. Raw `curl | sh` uv installs in CI are unpinned.
-- **Impact:** Replaced `curl -LsSf https://astral.sh/uv/install.sh | sh` with `astral-sh/setup-uv@v7` in `.github/workflows/ci.yml` (both jobs) and `.github/workflows/package-validation.yml`.
+- **Impact:** Replaced `curl -LsSf https://astral.sh/uv/install.sh | sh` with `astral-sh/setup-uv@v4` in `.github/workflows/ci.yml` (both jobs).
 - **Status:** fixed — 2026-03-19

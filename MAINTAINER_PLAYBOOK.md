@@ -1,15 +1,15 @@
-# DEX Maintainer Playbook
+# DataEngineX Maintainer Playbook
 
-Maintainer guidance for low-effort, long-term sustainability of DEX as an open-source, Python-first Data & AI engine.
+Maintainer guidance for low-effort, long-term sustainability of DataEngineX as an open-source, Python-first Data & AI engine.
 
 ## Scope and Boundaries
 
-### What DEX is
+### What DataEngineX is
 - A Python-first framework and learning platform for data engineering, ML, APIs, and platform practices.
 - A cloud-agnostic reference implementation where local and open-source defaults are first-class.
 - A community project optimized for clarity, education, and maintainability over feature velocity.
 
-### What DEX is not
+### What DataEngineX is not
 - Not a production SaaS with managed-service lock-in assumptions.
 - Not a benchmark contest for adding heavy dependencies without maintenance owners.
 - Not a provider-specific template repo (AWS-only, GCP-only, Azure-only).
