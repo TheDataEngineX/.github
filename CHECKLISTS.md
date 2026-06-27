@@ -48,7 +48,7 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 **See examples:**
 - API endpoints → [src/dataenginex/api/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/dataenginex/api/)
 - Request models → [src/dataenginex/core/schemas.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/schemas.py)
-- Tests → [tests/integration/test_e2e_api.py](https://github.com/TheDataEngineX/dataenginex/blob/main/tests/integration/test_e2e_api.py)
+- Tests → [tests/integration/test_pipeline_e2e.py](https://github.com/TheDataEngineX/dataenginex/blob/main/tests/integration/test_pipeline_e2e.py)
 
 ---
 
@@ -93,7 +93,7 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Is this data connection secured?
 
 **See examples:**
-- SQLAlchemy ORM → [src/dataenginex/core/database.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/database.py)
+- SQLAlchemy ORM → src/dataenginex/core/database.py
 - Schema patterns → Check database documentation
 - Schema patterns → Check database documentation
 
@@ -139,7 +139,7 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 **See examples:**
 - Docstrings → Any file in [src/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/)
 - README patterns → [README.md](https://github.com/TheDataEngineX/dataenginex/blob/main/README.md)
-- Architecture → [docs/ARCHITECTURE.md](https://github.com/TheDataEngineX/dataenginex/blob/main/docs/ARCHITECTURE.md)
+- Architecture → [docs/architecture.md](https://github.com/TheDataEngineX/dataenginex/blob/main/docs/architecture.md)
 
 ---
 
@@ -162,9 +162,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - What happens if someone sends malicious input?
 
 **See examples:**
-- Auth patterns → [src/dataenginex/api/auth.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/api/auth.py)
+- Auth patterns → src/dataenginex/api/auth.py
 - Validation → [src/dataenginex/core/validators.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/validators.py)
-- Configuration → [.env.example](https://github.com/TheDataEngineX/dataenginex/blob/main/.env.example)
+- Configuration → [.env.template](https://github.com/TheDataEngineX/dataenginex/blob/main/.env.template)
 
 ---
 
@@ -183,7 +183,7 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Could this timeout with large datasets?
 
 **See examples:**
-- Efficient queries → Check [src/dataenginex/core/database.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/database.py)
+- Efficient queries → Check src/dataenginex/core/database.py
 - Async patterns → [src/dataenginex/api/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/dataenginex/api/)
 
 ---
