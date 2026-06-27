@@ -15,7 +15,7 @@ jobs:
   actionlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
       - uses: reviewdog/action-actionlint@v1
         with:
           reporter: github-pr-review
@@ -23,16 +23,16 @@ jobs:
   markdownlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
       - uses: DavidAnson/markdownlint-cli2-action@v19
         with:
           globs: "**/*.md"
-          config: ".markdownlint-cli2.jsonc"
+          config: ".github/.markdownlint-cli2.jsonc"
 
   linkcheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
       - uses: lycheeverse/lychee-action@v2
         with:
           fail: true
