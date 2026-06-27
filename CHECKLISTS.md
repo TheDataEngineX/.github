@@ -22,9 +22,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Can this be tested independently?
 
 **See examples:**
-- Clean code patterns → [src/dataenginex/core/](../src/dataenginex/core/)
-- Error handling → [src/dataenginex/api/](../src/dataenginex/api/)
-- Tests → [tests/unit/](../tests/unit/)
+- Clean code patterns → [src/dataenginex/core/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/dataenginex/core/)
+- Error handling → [src/dataenginex/api/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/dataenginex/api/)
+- Tests → [tests/unit/](https://github.com/TheDataEngineX/dataenginex/tree/main/tests/unit/)
 
 ---
 
@@ -46,9 +46,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Is the response schema documented?
 
 **See examples:**
-- API endpoints → [src/dataenginex/api/](../src/dataenginex/api/)
-- Request models → [src/dataenginex/core/schemas.py](../src/dataenginex/core/schemas.py)
-- Tests → [tests/integration/test_e2e_api.py](../tests/integration/test_e2e_api.py)
+- API endpoints → [src/dataenginex/api/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/dataenginex/api/)
+- Request models → [src/dataenginex/core/schemas.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/schemas.py)
+- Tests → [tests/integration/test_e2e_api.py](https://github.com/TheDataEngineX/dataenginex/blob/main/tests/integration/test_e2e_api.py)
 
 ---
 
@@ -70,9 +70,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - What metrics would tell us if it failed silently?
 
 **See examples:**
-- Pipeline patterns → [examples/07_api_ingestion.py](../examples/07_api_ingestion.py)
-- Data validation → [src/dataenginex/core/validators.py](../src/dataenginex/core/validators.py)
-- Tests → [tests/unit/test_data.py](../tests/unit/test_data.py)
+- Pipeline patterns → [examples/07_api_ingestion.py](https://github.com/TheDataEngineX/dataenginex/blob/main/examples/07_api_ingestion.py)
+- Data validation → [src/dataenginex/core/validators.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/validators.py)
+- Tests → [tests/unit/test_data.py](https://github.com/TheDataEngineX/dataenginex/blob/main/tests/unit/test_data.py)
 
 ---
 
@@ -93,7 +93,7 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Is this data connection secured?
 
 **See examples:**
-- SQLAlchemy ORM → [src/dataenginex/core/database.py](../src/dataenginex/core/database.py)
+- SQLAlchemy ORM → [src/dataenginex/core/database.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/database.py)
 - Schema patterns → Check database documentation
 - Schema patterns → Check database documentation
 
@@ -116,9 +116,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Could you understand the test from the name alone?
 
 **See examples:**
-- Unit tests → [tests/unit/](../tests/unit/)
-- Integration tests → [tests/integration/](../tests/integration/)
-- Fixtures → [tests/conftest.py](../tests/conftest.py)
+- Unit tests → [tests/unit/](https://github.com/TheDataEngineX/dataenginex/tree/main/tests/unit/)
+- Integration tests → [tests/integration/](https://github.com/TheDataEngineX/dataenginex/tree/main/tests/integration/)
+- Fixtures → [tests/conftest.py](https://github.com/TheDataEngineX/dataenginex/blob/main/tests/conftest.py)
 
 ---
 
@@ -137,9 +137,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Do examples match current code?
 
 **See examples:**
-- Docstrings → Any file in [src/](../src/)
-- README patterns → [README.md](../README.md)
-- Architecture → [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md)
+- Docstrings → Any file in [src/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/)
+- README patterns → [README.md](https://github.com/TheDataEngineX/dataenginex/blob/main/README.md)
+- Architecture → [docs/ARCHITECTURE.md](https://github.com/TheDataEngineX/dataenginex/blob/main/docs/ARCHITECTURE.md)
 
 ---
 
@@ -153,7 +153,7 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - [ ] Authentication on protected endpoints
 - [ ] No sensitive data in logs
 - [ ] HTTPS only in production
-- [ ] Dependency versions managed in [pyproject.toml](../pyproject.toml)
+- [ ] Dependency versions managed in [pyproject.toml](https://github.com/TheDataEngineX/dataenginex/blob/main/pyproject.toml)
 
 **Code review questions:**
 - Can someone exploit this to access data they shouldn't?
@@ -162,9 +162,9 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - What happens if someone sends malicious input?
 
 **See examples:**
-- Auth patterns → [src/dataenginex/api/auth.py](../src/dataenginex/api/auth.py)
-- Validation → [src/dataenginex/core/validators.py](../src/dataenginex/core/validators.py)
-- Configuration → [.env.example](.env.example)
+- Auth patterns → [src/dataenginex/api/auth.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/api/auth.py)
+- Validation → [src/dataenginex/core/validators.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/validators.py)
+- Configuration → [.env.example](https://github.com/TheDataEngineX/dataenginex/blob/main/.env.example)
 
 ---
 
@@ -183,8 +183,8 @@ Quick reference checklists for common tasks. **Reference actual code patterns in
 - Could this timeout with large datasets?
 
 **See examples:**
-- Efficient queries → Check [src/dataenginex/core/database.py](../src/dataenginex/core/database.py)
-- Async patterns → [src/dataenginex/api/](../src/dataenginex/api/)
+- Efficient queries → Check [src/dataenginex/core/database.py](https://github.com/TheDataEngineX/dataenginex/blob/main/src/dataenginex/core/database.py)
+- Async patterns → [src/dataenginex/api/](https://github.com/TheDataEngineX/dataenginex/tree/main/src/dataenginex/api/)
 
 ---
 

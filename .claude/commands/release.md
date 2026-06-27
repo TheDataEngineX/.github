@@ -26,8 +26,6 @@ conventional commits merged to main
    gh pr list --label "autorelease: pending" --limit 5
    ```
 
-
-
 1. **Review the Release PR**
 
    - Confirm version bump level matches commit types

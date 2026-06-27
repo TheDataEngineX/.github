@@ -5,7 +5,7 @@
 [![CI](https://github.com/TheDataEngineX/dataenginex/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TheDataEngineX/dataenginex/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/dataenginex)](https://pypi.org/project/dataenginex/)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/TheDataEngineX/dataenginex/blob/main/LICENSE)
 [![Coverage](https://img.shields.io/badge/coverage-94%25-brightgreen)](https://github.com/TheDataEngineX/dataenginex)
 
 ## What is DataEngineX?
@@ -104,8 +104,6 @@ Part of the [DataEngineX](https://github.com/TheDataEngineX) ecosystem:
 | [dex-studio](https://github.com/TheDataEngineX/dex-studio) | Desktop UI | 7860 |
 | [infradex](https://github.com/TheDataEngineX/infradex) | Infrastructure | — |
 
-
-
 Full observability stack (Prometheus + Grafana + Jaeger): see [infradex](https://github.com/TheDataEngineX/infradex) `docker-compose.monitoring.yml`.
 
 ## Pages
@@ -113,7 +111,6 @@ Full observability stack (Prometheus + Grafana + Jaeger): see [infradex](https:/
 - [[Architecture]] — Medallion pipeline, module graph, extras
 - [[ML-Guide]] — ModelRegistry, RAG, LLM providers, drift detection
 - [[Development]] — Build, test, and run commands
-
 
 ---
 

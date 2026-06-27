@@ -1,0 +1,5 @@
+# Exclude URLs that are planned but not yet live
+exclude = [
+  "https://github.com/TheDataEngineX/infradex.*",
+  "https://docs.thedataenginex.org.*",
+]

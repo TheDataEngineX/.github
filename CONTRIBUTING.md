@@ -7,7 +7,7 @@ the org-wide contribution process. Individual repos may have additional guidelin
 
 ### Reporting Bugs
 
-1. Check [existing issues](https://github.com/orgs/TheDataEngineX/issues) first
+1. Check [existing issues](https://github.com/TheDataEngineX/dataenginex/issues) first
 2. Use the **Bug Report** issue template
 3. Include reproduction steps, expected vs. actual behavior, and environment details
 
@@ -63,7 +63,7 @@ uv run poe test           # pytest
 ## Community
 
 - [GitHub Discussions](https://github.com/orgs/TheDataEngineX/discussions) — questions, ideas, show & tell
-- [Issue Tracker](https://github.com/orgs/TheDataEngineX/issues) — bugs, features, tasks
+- [Issue Tracker](https://github.com/TheDataEngineX/dataenginex/issues) — bugs, features, tasks
 
 ## License
 
