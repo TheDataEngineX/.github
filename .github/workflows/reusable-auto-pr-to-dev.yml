@@ -1,18 +1,28 @@
-name: Auto PR — feature → main (reusable)
+# Reusable workflow — auto-creates a PR from a feature/fix branch → dev and enables
+# auto-merge. The squash commit title is derived from the branch name in conventional
+# commit format (feature/feat-add-foo → "feat: add foo").
+#
+# Prerequisites (one-time per repo, GitHub UI):
+#   1. Settings → General → Allow auto-merge ✓
+#   2. Settings → Branches → branch protection on 'dev':
+#      - Require status checks: CI (lint-and-test)
+#      - Require branches to be up to date before merging
+
+name: Auto PR — feature → dev (reusable)
 
 on:
   workflow_call:
 
 jobs:
   create-pr:
-    name: Create PR to main
+    name: Create PR to dev
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
 
     steps:
-      - name: Create or update PR (feature/fix → main)
+      - name: Create or update PR (feature/fix → dev)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
@@ -22,6 +32,7 @@ jobs:
           # feature/feat-add-pipeline → "feat: add pipeline"
           # feature/add-pipeline      → "feat: add pipeline"
           # fix/fix-null-ptr          → "fix: null ptr"
+          # fix/null-ptr              → "fix: null ptr"
           BRANCH_DESC=$(echo "$HEAD" | sed 's|^feature/||;s|^fix/||')
           if echo "$BRANCH_DESC" | grep -qE '^feat-'; then
             TITLE="feat: $(echo "$BRANCH_DESC" | sed 's|^feat-||;s|-| |g')"
@@ -35,8 +46,9 @@ jobs:
 
           echo "PR title: $TITLE"
 
+          # Check for existing open PR
           PR_NUMBER=$(gh pr list \
-            --base main \
+            --base dev \
             --head "$HEAD" \
             --state open \
             --json number \
@@ -45,18 +57,21 @@ jobs:
           if [ -n "$PR_NUMBER" ]; then
             echo "PR #$PR_NUMBER already exists"
           else
-            BODY="Automated PR: ${HEAD} → main. Review the preview environment before merging."
+            BODY="Automated PR: ${HEAD} -> dev. Auto-merge enabled - squash-merges when all required checks pass. Edit the PR title to a conventional commit format if needed."
             gh pr create \
-              --base main \
+              --base dev \
               --head "$HEAD" \
               --title "$TITLE" \
               --body "$BODY"
 
             PR_NUMBER=$(gh pr list \
-              --base main \
+              --base dev \
               --head "$HEAD" \
               --state open \
               --json number \
               --jq '.[0].number')
             echo "Created PR #$PR_NUMBER"
           fi
+
+          gh pr merge "$PR_NUMBER" --auto --squash
+          echo "Auto-merge (squash) enabled on PR #$PR_NUMBER"
