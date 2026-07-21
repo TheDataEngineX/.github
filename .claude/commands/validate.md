@@ -34,8 +34,8 @@ Run the full validation pipeline for the current repo. Stop and report on first 
    ```bash
    uv run poe dev &
    sleep 3
-   curl -sf http://localhost:17000/health && echo "health OK"
-   curl -sf http://localhost:17000/metrics | head -5 && echo "metrics OK"
+   curl -sf http://localhost:7860/health && echo "health OK"
+   curl -sf http://localhost:7860/metrics | head -5 && echo "metrics OK"
    kill %1
    ```
 

@@ -7,7 +7,7 @@ the org-wide contribution process. Individual repos may have additional guidelin
 
 ### Reporting Bugs
 
-1. Check [existing issues](https://github.com/orgs/TheDataEngineX/issues) first
+1. Check [existing issues](https://github.com/TheDataEngineX/dataenginex/issues) first
 2. Use the **Bug Report** issue template
 3. Include reproduction steps, expected vs. actual behavior, and environment details
 
@@ -19,7 +19,7 @@ the org-wide contribution process. Individual repos may have additional guidelin
 
 ### Submitting Pull Requests
 
-1. Fork the repo and create a feature branch: `feature/<description>` or `fix/<description>`
+1. Fork the repo and create a feature branch with a descriptive name
 2. Follow [Conventional Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`
 3. Ensure all checks pass before requesting review
 4. Reference related issues: `feat: add drift detection (#42)`
@@ -63,7 +63,7 @@ uv run poe check-all     # lint + typecheck + tests
 ## Community
 
 - [GitHub Discussions](https://github.com/orgs/TheDataEngineX/discussions) — questions, ideas, show & tell
-- [Issue Tracker](https://github.com/orgs/TheDataEngineX/issues) — bugs, features, tasks
+- [Issue Tracker](https://github.com/TheDataEngineX/dataenginex/issues) — bugs, features, tasks
 
 ## License
 

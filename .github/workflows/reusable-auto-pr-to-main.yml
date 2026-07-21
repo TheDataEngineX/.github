@@ -1,0 +1,36 @@
+name: Reusable Auto PR to Main
+
+on:
+  workflow_call:
+
+jobs:
+  auto-pr:
+    name: Create PR to main
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create or update PR to main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          REPO="${{ github.repository }}"
+
+          # Check if PR already exists
+          EXISTING=$(gh pr list --repo "$REPO" --head "$BRANCH" --base main --json number --jq '.[0].number')
+
+          if [ -n "$EXISTING" ]; then
+            echo "PR #$EXISTING already exists for $BRANCH → main"
+          else
+            gh pr create \
+              --repo "$REPO" \
+              --head "$BRANCH" \
+              --base main \
+              --title "chore: merge \`$BRANCH\` → main" \
+              --body "Automated PR: merging \`$BRANCH\` into \`main\`." \
+              --label "automated-pr" || true
+          fi
