@@ -38,7 +38,7 @@ Every pipeline must be safe to re-run:
 
 ## Lineage
 
-- Track column-level lineage via `LineageTracker` — every transform must be registered
+- Track column-level lineage via `PersistentLineage` or `LineageBackend` — every transform must be registered
 - Never drop lineage events silently — log failures
 
 ## Performance

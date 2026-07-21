@@ -26,11 +26,11 @@ You are a multi-agent systems architect for DataEngineX, designing and implement
 
 ## Key Project Files
 
-- Agent source: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/`
-- Agent runtime: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/serving.py`
-- LLM providers: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/llm.py`
-- Interfaces: `${WORKSPACE_ROOT}/dex/src/dataenginex/core/interfaces.py`
-- Tests: `${WORKSPACE_ROOT}/dex/tests/`
+- Agent source: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/ai/agents/`
+- Agent runtime: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/ml/serving.py`
+- LLM providers: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/ai/llm.py`
+- Interfaces: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/core/interfaces.py`
+- Tests: `${WORKSPACE_ROOT}/dataenginex/tests/`
 
 ## Guidelines
 

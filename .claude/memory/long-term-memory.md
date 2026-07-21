@@ -96,5 +96,5 @@ _Nothing yet._
 
 - **Source:** <https://github.com/astral-sh/uv/releases>
 - **Finding:** uv 0.10.8 switches default binary/CPython mirror from python.org to Astral mirrors. Raw `curl | sh` uv installs in CI are unpinned.
-- **Impact:** Replaced `curl -LsSf https://astral.sh/uv/install.sh | sh` with `astral-sh/setup-uv@v4` in `.github/workflows/ci.yml` (both jobs).
+- **Impact:** Replaced `curl -LsSf https://astral.sh/uv/install.sh | sh` with `astral-sh/setup-uv@v7` in `.github/workflows/ci.yml` (both jobs) and `.github/workflows/package-validation.yml`. Note: these workflows were removed in the 2026-07-16 `.github` cleanup; the UV setup pattern now lives in individual repos (`dataenginex`, `dex-studio`).
 - **Status:** fixed — 2026-03-19

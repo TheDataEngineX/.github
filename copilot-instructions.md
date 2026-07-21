@@ -10,9 +10,9 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 | Repo | Package | Purpose | Port |
 |------|---------|---------|------|
-| `dataenginex` (dex) | `dataenginex` | Core library — config, registry, CLI, pipelines, ML, AI, PrivacyGuard (pure Python, no HTTP server) | — |
-| `dex-studio` | `dex-studio` | Web UI — FastAPI + Jinja2 + HTMX, direct dataenginex import | 7860 |
-| `infradex` | — | K3s / Helm / Terraform / ArgoCD infrastructure | — |
+| `dataenginex` (dex) | `dataenginex` | Core framework — config, registry, CLI, API, ML, AI | 17000 |
+| `dex-studio` | `dex-studio` | Web UI — single pane of glass (FastAPI + Jinja2 + HTMX) | 7860 |
+| `infradex` | — | IaC + monitoring (Terraform, Helm, K3s) | — |
 
 ---
 
@@ -56,7 +56,7 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 1. `uv run poe lint` — Ruff lint
 2. `uv run poe typecheck` — mypy strict
-3. `uv run poe test` — pytest
+3. `uv run poe check-all` — lint + typecheck + tests
 4. Start real server and verify endpoints (see repo `CLAUDE.md`)
 5. Standalone import check
 
@@ -64,23 +64,23 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 ### Context7 MCP
 
-Always use Context7 MCP for library/API docs (FastAPI, Pydantic, ArgoCD, Helm, etc.) — without the user having to ask.
+Always use Context7 MCP for library/API docs (FastAPI, PySpark, Pydantic, Airflow, Jinja2) — without the user having to ask.
 
 ---
 
 ## Cross-Repo Sync Policy
 
-Verify consistency across all 3 repos on every `feature → main` PR.
+Verify consistency across all 3 repos on every `dev → main` PR.
 
 ### Required workflows in all repos
 
-`ci.yml` · `security.yml`
+`security.yml` · `sync-labels.yml` · `project-automation.yml` · `stale-issues.yml`
 
 ### Required files in all repos
 
-`CLAUDE.md` · `README.md` · `pyproject.toml` · `uv.lock` · `LICENSE`
+`CLAUDE.md` · `README.md` · `pyproject.toml` · `uv.lock` · `tasks/todo.md` · `tasks/lessons.md` · `tasks/findings.md` · `.github/PULL_REQUEST_TEMPLATE.md` · `.github/dependabot.yml` · `CODEOWNERS` · `LICENSE`
 
-Do NOT copy dex-only workflows (`release.yml`) to other repos.
+Do NOT copy dex-only workflows (`pypi-publish.yml`, `release-dataenginex.yml`) to other repos.
 
 ---
 

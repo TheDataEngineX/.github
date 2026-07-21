@@ -25,7 +25,7 @@ Run the full validation pipeline for the current repo. Stop and report on first 
 1. **Tests**
 
    ```bash
-   uv run poe test
+   uv run poe check-all
    # fallback: uv run pytest tests/ -x --tb=short -q
    ```
 

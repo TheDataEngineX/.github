@@ -1,15 +1,18 @@
-# Reusable workflow — called from each repo's .github/workflows/security.yml
-# Logic lives here once; repo files are thin callers.
-#
+# Security Scans for the .github meta-repo.
 # Runs Trivy (misconfig + secret scan) on push/PR.
-# CodeQL is handled by GitHub's default setup — do NOT add a custom codeql job
-# (GitHub rejects SARIF uploads when default setup is enabled).
-# Results appear in GitHub Security tab.
+# CodeQL is handled by GitHub's default setup — do NOT add a custom codeql job.
 
-name: Security Scans (reusable)
+name: Security Scans
 
 on:
-  workflow_call:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+permissions:
+  contents: read
+  security-events: write
 
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -17,9 +20,6 @@ env:
 jobs:
   trivy-security:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
     steps:
       - name: Notify Security Scan Start
         uses: actions/github-script@v9

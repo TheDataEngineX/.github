@@ -28,7 +28,7 @@ You are a security auditor for DataEngineX — read-only analysis of vulnerabili
 - Dependencies: `pyproject.toml` + `uv.lock` — known CVEs, abandoned packages
 - Config files: `.env.example`, K8s manifests, Dockerfiles — secrets, misconfigs
 - Workflows: `.github/workflows/` — permissions, secret exposure, action versions
-- Trivy findings: `argocd/`, `helm/` — misconfigs, image vulnerabilities
+- Trivy findings: `infradex/argocd/`, `infradex/helm/` — misconfigs, image vulnerabilities
 
 ## Red Flags to Always Check
 

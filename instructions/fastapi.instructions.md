@@ -22,7 +22,7 @@ Extends `python.instructions.md`.
 ## Auth
 
 - Protected endpoints check auth via lifespan middleware — not inline per endpoint
-- Auth: pure-Python HS256 JWT (no `pyjwt` dependency)
+- Auth: HS256 JWT (PyJWT dependency)
 - Return `401` for missing/invalid token, `403` for insufficient permissions
 - Never log the token or any credential
 

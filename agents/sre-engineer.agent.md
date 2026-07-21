@@ -24,11 +24,10 @@ You are an SRE for DataEngineX, owning reliability targets, Prometheus/Grafana m
 
 ## Key Project Files
 
-- Prometheus config: `monitoring/prometheus.yml`
-- Alert rules: `monitoring/alerts/`
-- Alertmanager: `monitoring/alertmanager.yml`
-- Grafana dashboards: `monitoring/grafana/`
-- Docker Compose: `docker-compose.monitoring.yml`
+- Prometheus config: `infradex/monitoring/prometheus.yml`
+- Alert rules: `infradex/monitoring/alerts/`
+- Alertmanager: `infradex/monitoring/alertmanager.yml`
+- Grafana dashboards: `infradex/monitoring/grafana/`
 
 ## Monitoring Stack Ports
 

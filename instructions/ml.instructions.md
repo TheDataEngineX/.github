@@ -1,5 +1,5 @@
 ---
-applyTo: "src/**/ml/**/*.py,src/**/models/**/*.py,src/**/registry/**/*.py,src/**/drift/**/*.py"
+applyTo: "src/**/ml/**/*.py,src/**/models/**/*.py,src/**/registry/**/*.py"
 ---
 
 # ML Standards
