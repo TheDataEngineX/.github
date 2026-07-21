@@ -38,6 +38,6 @@ Generate a pull request description for the current changes using the project's 
 - [ ] No breaking changes (or documented in description)
 ```
 
-4. Check the appropriate boxes based on actual changes
-5. Write a concise but complete description
-6. Use conventional commit style for the summary line
+1. Check the appropriate boxes based on actual changes
+2. Write a concise but complete description
+3. Use conventional commit style for the summary line

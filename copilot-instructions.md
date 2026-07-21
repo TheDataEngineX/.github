@@ -13,6 +13,7 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 | `dataenginex` (dex) | `dataenginex` | Core framework — config, registry, CLI, API, ML, AI | 17000 |
 | `dex-studio` | `dex-studio` | Web UI — single pane of glass (FastAPI + Jinja2 + HTMX) | 7860 |
 | `infradex` | — | IaC + monitoring (Terraform, Helm, K3s) | — |
+
 ---
 
 ## Coding Standards
