@@ -1,0 +1,50 @@
+name: Auto PR — dev → main (reusable)
+
+on:
+  workflow_call:
+
+jobs:
+  create-pr:
+    name: Create PR to main
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Create or update PR (dev → main)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          AHEAD=$(gh api "repos/$GH_REPO/compare/main...dev" --jq '.ahead_by')
+          if [ "$AHEAD" = "0" ]; then
+            echo "dev is already in sync with main — nothing to do"
+            exit 0
+          fi
+          echo "dev is $AHEAD commit(s) ahead of main"
+
+          PR_NUMBER=$(gh pr list \
+            --base main \
+            --head dev \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+
+          if [ -n "$PR_NUMBER" ]; then
+            echo "PR #$PR_NUMBER already exists"
+          else
+            gh pr create \
+              --base main \
+              --head dev \
+              --title "chore: sync dev -> main" \
+              --body "Automated PR: dev → main. Merge when all required checks pass."
+
+            PR_NUMBER=$(gh pr list \
+              --base main \
+              --head dev \
+              --state open \
+              --json number \
+              --jq '.[0].number')
+            echo "Created PR #$PR_NUMBER"
+          fi
