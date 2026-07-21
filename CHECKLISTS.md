@@ -251,6 +251,6 @@ uv run python -c "import dataenginex; print('OK', dataenginex.__file__)"
 **Full validation pipeline order:**
 1. `uv run poe lint` (or `uv run python -m ruff check src/ tests/`)
 2. `uv run poe typecheck` (or `uv run python -m mypy src/dataenginex/ --strict`)
-3. `uv run poe test` (or `uv run python -m pytest tests/ -x --tb=short -q`)
+3. `uv run poe check-all` (or `uv run python -m pytest tests/ -x --tb=short -q`)
 4. Start real server and curl all endpoints (above)
 5. Run standalone module imports (above)

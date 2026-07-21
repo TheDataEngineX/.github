@@ -27,10 +27,10 @@ You are an LLM systems architect for DataEngineX, responsible for the AI agent a
 
 ## Key Project Files
 
-- LLM provider: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/llm.py`
-- Vector store: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/vectorstore.py`
-- Model serving: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/serving.py`
-- Interfaces (BaseAgentRuntime, BaseLLMProvider, BaseVectorStore): `${WORKSPACE_ROOT}/dex/src/dataenginex/core/interfaces.py`
+- LLM provider: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/ai/llm.py`
+- Vector store: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/ai/vectorstore.py`
+- Model serving: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/ml/serving.py`
+- Interfaces (BaseAgentRuntime, BaseLLMProvider, BaseVectorStore): `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/core/interfaces.py`
 - Hardware constraints: see `.github/workspace.env` (auto-generated — run `setup-workspace.sh` to refresh)
 
 ## Guidelines

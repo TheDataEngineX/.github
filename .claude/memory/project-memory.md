@@ -20,8 +20,6 @@ _Nothing yet._
 | dex-studio | — | — |
 | infradex | — | — |
 
-> **Note:** datadex, agentdex, and careerdex consolidated into dataenginex monorepo.
-
 ## Blockers
 
 _None._

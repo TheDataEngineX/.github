@@ -18,7 +18,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: thedataenginex/${{ inputs.image-name }}
+  IMAGE_NAME: TheDataEngineX/${{ inputs.image-name }}
 
 jobs:
   build:

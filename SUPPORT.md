@@ -21,7 +21,7 @@ For bugs and feature requests, use the issue tracker in the relevant repo:
 
 | Repo | Issues |
 |------|--------|
-| DEX | [Issues](https://github.com/TheDataEngineX/DEX/issues) |
+| DEX | [Issues](https://github.com/TheDataEngineX/dataenginex/issues) |
 | dex-studio | [Issues](https://github.com/TheDataEngineX/dex-studio/issues) |
 | infradex | [Issues](https://github.com/TheDataEngineX/infradex/issues) |
 

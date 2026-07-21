@@ -30,7 +30,7 @@ All repos use the same toolchain:
 
 ```bash
 # Prerequisites
-python >= 3.12  # 3.13+ recommended
+python >= 3.13
 uv  # Package manager (https://docs.astral.sh/uv/)
 
 # Clone and setup
@@ -41,7 +41,7 @@ uv sync
 # Quality checks
 uv run poe lint           # Ruff lint
 uv run poe typecheck      # mypy --strict
-uv run poe test           # pytest
+uv run poe check-all     # lint + typecheck + tests
 ```
 
 ## Coding Standards

@@ -33,7 +33,6 @@ Scaffold a new feature for the DataEngineX project.
 
 5. **Validate**:
    - `poe check-all` — lint + typecheck + tests
-   - `poe test-cov` — verify 80%+ coverage maintained
 
 6. **Commit** — Use conventional commit: `feat: <description> (#issue)`
 

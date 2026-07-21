@@ -18,17 +18,21 @@ jobs:
       fail-fast: false
       matrix:
         repo:
-          - DEX
+          - dataenginex
           - dex-studio
           - infradex
     steps:
       - uses: actions/checkout@v6
 
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          version: "latest"
+
       - name: Sync labels to ${{ matrix.repo }}
         env:
           GH_TOKEN: ${{ secrets.LABELS_SYNC_TOKEN }}
         run: |
-          pip install pyyaml -q
+          uv pip install pyyaml -q
           python3 - <<'PYEOF'
           import json, subprocess, yaml
           with open('labels.yml') as f:

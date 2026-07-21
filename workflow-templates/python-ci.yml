@@ -7,7 +7,7 @@ on:
         description: "Python version to use"
         required: false
         type: string
-        default: "3.12"
+        default: "3.13"
       package-path:
         description: "Path to source package"
         required: false

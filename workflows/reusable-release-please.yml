@@ -17,7 +17,7 @@
 # Callers need only:
 #   jobs:
 #     release:
-#       uses: TheDataEngineX/.github/.github/workflows/release-please.yml@main
+#       uses: TheDataEngineX/.github/workflows/release-please.yml@main
 #       secrets: inherit
 
 name: Release Please (reusable)

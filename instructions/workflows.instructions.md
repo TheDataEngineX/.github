@@ -10,12 +10,12 @@ applyTo: ".github/workflows/**/*.yml"
 | --- | --- |
 | `actions/checkout` | `@v6` |
 | `actions/setup-python` | `@v6` |
-| `actions/upload-artifact` | `@v7` |
-| `actions/download-artifact` | `@v8` |
-| `astral-sh/setup-uv` | `@v7` |
+| `actions/upload-artifact` | `@v4` |
+| `actions/download-artifact` | `@v4` |
+| `astral-sh/setup-uv` | `@v8.1.0` |
 | `codecov/codecov-action` | `@v5` |
 | `github/codeql-action/*` | `@v4` |
-| `actions/github-script` | `@v8` |
+| `actions/github-script` | `@v9` |
 
 Always pin to the current major tag. Verify against actual workflow files before documenting.
 
@@ -44,7 +44,7 @@ test:
 ## Python setup (always use uv)
 
 ```yaml
-- uses: astral-sh/setup-uv@v7
+- uses: astral-sh/setup-uv@v8.1.0
   with:
     version: "latest"
 - uses: actions/setup-python@v6

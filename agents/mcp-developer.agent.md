@@ -25,7 +25,7 @@ You are an MCP (Model Context Protocol) developer for DataEngineX, building and 
 ## Key Project Files
 
 - Claude Code MCP config: `${WORKSPACE_ROOT}/.claude/settings.local.json`
-- Agent integrations: `${WORKSPACE_ROOT}/dex/src/dataenginex/ml/`
+- Agent integrations: `${WORKSPACE_ROOT}/dataenginex/src/dataenginex/`
 - Context7 MCP: already configured — add `use context7` to prompts for library docs
 
 ## Registered MCP Servers

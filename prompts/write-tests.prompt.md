@@ -21,6 +21,6 @@ Write tests for the code in ${file}.
    - Happy path + error paths + edge cases (empty, None, boundary)
    - Mock external services only, not code under test
    - Use `tmp_path` for file operations
-5. **Verify** — Run `poe test-unit` to confirm tests pass
+5. **Verify** — Run `poe test-cov-core` to confirm tests pass
 
 Follow patterns in existing tests under `tests/unit/`.

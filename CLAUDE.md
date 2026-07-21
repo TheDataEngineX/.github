@@ -9,7 +9,7 @@ Workspace-wide rules: **dex · dex-studio · infradex**. Repo-specific context i
 | Repo | Package | Port | Purpose |
 |------|---------|------|---------|
 | `dex` | `dataenginex` | 17000 | Core framework — config, registry, CLI, API, ML, AI (routing, runtime, memory, observability, workflows) |
-| `dex-studio` | `dex-studio` | 7860 | Web UI — NiceGUI single pane of glass |
+| `dex-studio` | `dex-studio` | 7860 | Web UI — FastAPI + Jinja2 + HTMX single pane of glass |
 | `infradex` | — | — | K3s / Helm / Terraform infrastructure |
 
 ## Git
@@ -41,9 +41,9 @@ Release-please automates versioning. Never bump manually. Pre-commit hook handle
 
 ## Tooling
 
-- **Tasks:** `poe lint` / `poe test` / `poe check-all` / `poe dev` — defined in `poe_tasks.toml`
+- **Tasks:** `poe lint` / `poe check-all` / `poe dev` — defined in `poe_tasks.toml`
 - **Hooks:** `.github/scripts/pre-commit-version-bump.sh` (`uv run poe install-hooks`)
-- **Workflows:** `.github/.github/workflows/` (security, release-please, enforce-dev-to-main)
+- **Workflows:** `.github/workflows/` (security, sync-labels, project-automation, stale-issues)
 - **Slash commands:** `/validate` `/review` `/pr` `/new-feature` `/fix-lint` `/debug`
 
 ## Production Rules

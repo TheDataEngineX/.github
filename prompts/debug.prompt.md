@@ -15,8 +15,7 @@ Debug the issue in or related to ${file}.
    - Type mismatches (check with `poe typecheck`)
    - Missing validation at boundaries
 4. **Verify** — Run targeted tests:
-   - `poe test-unit` for unit tests
-   - `poe test-integration` for API/integration tests
+   - `poe test-cov-core` for core tests
    - Check lint/type errors: `poe lint` and `poe typecheck`
 5. **Fix** — Apply the minimal change that resolves the issue
    - Follow project error patterns from `src/dataenginex/api/errors.py`

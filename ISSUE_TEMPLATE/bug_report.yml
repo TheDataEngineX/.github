@@ -69,4 +69,4 @@ body:
     id: python
     attributes:
       label: Python Version
-      placeholder: "3.12.0"
+      placeholder: "3.13.0"

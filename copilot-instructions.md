@@ -11,11 +11,8 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 | Repo | Package | Purpose | Port |
 |------|---------|---------|------|
 | `dataenginex` (dex) | `dataenginex` | Core framework — config, registry, CLI, API, ML, AI | 17000 |
-| `dex-studio` | `dex-studio` | Web UI — single pane of glass (NiceGUI) | 7860 |
+| `dex-studio` | `dex-studio` | Web UI — single pane of glass (FastAPI + Jinja2 + HTMX) | 7860 |
 | `infradex` | — | IaC + monitoring (Terraform, Helm, K3s) | — |
-
-> datadex, agentdex, and careerdex consolidated into `dataenginex` as submodules.
-
 ---
 
 ## Coding Standards
@@ -58,7 +55,7 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 1. `uv run poe lint` — Ruff lint
 2. `uv run poe typecheck` — mypy strict
-3. `uv run poe test` — pytest
+3. `uv run poe check-all` — lint + typecheck + tests
 4. Start real server and verify endpoints (see repo `CLAUDE.md`)
 5. Standalone import check
 
@@ -66,7 +63,7 @@ Be pragmatic, straight forward and challenge my ideas and system design focus on
 
 ### Context7 MCP
 
-Always use Context7 MCP for library/API docs (FastAPI, PySpark, Pydantic, Airflow, NiceGUI) — without the user having to ask.
+Always use Context7 MCP for library/API docs (FastAPI, PySpark, Pydantic, Airflow, Jinja2) — without the user having to ask.
 
 ---
 
@@ -76,7 +73,7 @@ Verify consistency across all 3 repos on every `dev → main` PR.
 
 ### Required workflows in all repos
 
-`ci.yml` · `enforce-dev-to-main.yml` · `claude.yml` · `security.yml` · `release-please.yml`
+`security.yml` · `sync-labels.yml` · `project-automation.yml` · `stale-issues.yml`
 
 ### Required files in all repos
 

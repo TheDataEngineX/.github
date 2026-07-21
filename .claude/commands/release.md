@@ -1,6 +1,6 @@
 # Release
 
-Release is fully automated via **release-please**. Claude's role is to verify readiness and monitor the pipeline — never to create tags, bump versions manually, or trigger workflows directly.
+Release is intended to be automated via **release-please** (not yet configured). Claude's role is to verify readiness and monitor the pipeline — never to create tags, bump versions manually, or trigger workflows directly.
 
 ## How it works
 
@@ -24,7 +24,7 @@ conventional commits merged to main
 1. **Verify pipeline triggered**
 
    ```bash
-   gh run list --workflow=release-please.yml --limit 5
+    gh run list --workflow=reusable-release-please.yml --limit 5
    ```
 
 1. **Check for open Release PR**

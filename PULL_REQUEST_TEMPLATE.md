@@ -20,5 +20,5 @@
 - [ ] Documentation updated (if applicable)
 - [ ] `uv run poe lint` passes
 - [ ] `uv run poe typecheck` passes
-- [ ] `uv run poe test` passes
+- [ ] `uv run poe check-all` passes
 - [ ] No breaking changes (or documented in description)
